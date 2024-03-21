@@ -1,0 +1,29 @@
+// point color
+$point0 : #39A7FF;
+$point1 : #87C4FF;
+$point2 : #E0F4FF;
+
+// font color
+$font0 : #222;
+$font1 : #63666F;
+$font2 : #B9BCC5;
+
+// vertical width
+$w_set : 1080px;
+
+// font style
+$nunito: 'Nunito Sans', sans-serif;
+
+@mixin pc {
+  @media (min-width: $w_set) {
+    @content;
+  }
+}
+
+@mixin mobile {
+  body:not(.is_pc) {
+    @media (max-width: $w_set) {
+      @content;
+    }
+  }
+}

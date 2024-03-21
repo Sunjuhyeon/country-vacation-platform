@@ -1,0 +1,83 @@
+.inner {
+  padding: 30px 0;
+}
+
+.map_wrap {
+  position: relative;
+  width: fit-content;
+  margin: 0 auto;
+}
+.map_wrap .state_wrap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+}
+.map_wrap .state_wrap ul {
+  position: relative;
+}
+.map_wrap .state_wrap ul li {
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
+.map_wrap .state_wrap ul li.state0 {
+  top: 133px;
+  left: 300px;
+}
+.map_wrap .state_wrap ul li.state1 {
+  top: 522px;
+  left: 281px;
+}
+.map_wrap .state_wrap ul li.state2 {
+  top: 362px;
+  left: 363px;
+}
+.map_wrap .state_wrap ul li.state3 {
+  top: 335px;
+  left: 107px;
+}
+.map_wrap .state_wrap ul li.state4 {
+  top: 593px;
+  left: 88px;
+}
+.map_wrap .state_wrap ul li.state5 {
+  top: 95px;
+  left: 125px;
+}
+.map_wrap .state_wrap ul li.state6 {
+  top: 465px;
+  left: 134px;
+}
+.map_wrap .state_wrap ul li.state7 {
+  top: 279px;
+  left: 222px;
+}
+.map_wrap .state_wrap ul li.state8 {
+  top: 410px;
+  left: 271px;
+}
+.map_wrap .state_wrap ul li.state9 {
+  top: 738px;
+  left: 51px;
+}
+.map_wrap .state_wrap ul li.state10 {
+  top: 512px;
+  left: 421px;
+}
+.map_wrap .state_wrap ul li.state11 {
+  top: 402px;
+  left: 178px;
+}
+.map_wrap .state_wrap ul li.state12 {
+  top: 131px;
+  left: 51px;
+}
+.map_wrap .state_wrap ul li .count_ico {
+  display: inline-block;
+  background-color: #fff;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}/*# sourceMappingURL=main.css.map */
