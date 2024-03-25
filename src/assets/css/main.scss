@@ -20,6 +20,10 @@
       li{
         position: absolute;
         transform: translate(-50%, -50%);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
         &.강원도{
           top: 133px;
           left: 300px;
@@ -45,8 +49,8 @@
           left: 125px;
         }
         &.전라북도{
-          top: 465px;
-          left: 134px;
+          top: 455px;
+          left: 120px;
         }
         &.충청북도{
           top: 279px;
@@ -57,7 +61,7 @@
           left: 271px;
         }
         &.제주도{
-          top: 738px;
+          top: 731px;
           left: 51px;
         }
         &.울산·부산{
@@ -71,6 +75,12 @@
         &.인천{
           top: 131px;
           left: 51px;
+        }
+        >p{
+          text-align: center;
+          padding-bottom: 5px;
+          font-size: 15px;
+          font-weight: 500;
         }
       }
     }

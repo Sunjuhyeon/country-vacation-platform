@@ -23,6 +23,10 @@
 .map_wrap .state_wrap ul li {
   position: absolute;
   transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .map_wrap .state_wrap ul li.강원도 {
   top: 133px;
@@ -49,8 +53,8 @@
   left: 125px;
 }
 .map_wrap .state_wrap ul li.전라북도 {
-  top: 465px;
-  left: 134px;
+  top: 455px;
+  left: 120px;
 }
 .map_wrap .state_wrap ul li.충청북도 {
   top: 279px;
@@ -61,7 +65,7 @@
   left: 271px;
 }
 .map_wrap .state_wrap ul li.제주도 {
-  top: 738px;
+  top: 731px;
   left: 51px;
 }
 .map_wrap .state_wrap ul li.울산·부산 {
@@ -75,4 +79,10 @@
 .map_wrap .state_wrap ul li.인천 {
   top: 131px;
   left: 51px;
+}
+.map_wrap .state_wrap ul li > p {
+  text-align: center;
+  padding-bottom: 5px;
+  font-size: 15px;
+  font-weight: 500;
 }/*# sourceMappingURL=main.css.map */

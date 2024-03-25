@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 // styled-component
@@ -84,10 +85,12 @@ export default function Map(props) {
             {listState.map((v, i) => {
               return (
                 <li key={i} className={`${v}`}>
-                  <p>{v}</p>
-                  <Circle size={countState[v]}>
-                    <IcoNm size={countState[v]}>{countState[v]}</IcoNm>
-                  </Circle>
+                  <Link to='/gangwon'>
+                    <p>{v}</p>
+                    <Circle size={countState[v]}>
+                      <IcoNm size={countState[v]}>{countState[v]}</IcoNm>
+                    </Circle>
+                  </Link>
                 </li>
               );
             })}

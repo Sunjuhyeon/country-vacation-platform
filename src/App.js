@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import Contents from './layout/Contents';
 import axios from 'axios';
-
-// import info from './data/info.json';
+import Contents from './layout/Contents';
 import './assets/css/genaral.css';
 
 export default function App() {
-  const URL = ' http://api.data.go.kr/openapi/tn_pubr_public_frhl_exprn_vilage_api';
+  const URL =
+    ' http://api.data.go.kr/openapi/tn_pubr_public_frhl_exprn_vilage_api';
 
   const [data, setData] = useState(null); //api로 받은 데이터를 저장할 상태
 
@@ -32,8 +31,8 @@ export default function App() {
     }
   };
 
-  const fetchData = async() => {
-    try{
+  const fetchData = async () => {
+    try {
       const provices = [
         '경기도',
         '전북특별자치도',
@@ -52,21 +51,32 @@ export default function App() {
         '경상남도',
         '경상북도',
       ];
-      const dataByProvice = await Promise.all(provices.map(fetchDataByProvince));
-      setData(dataByProvice.flat());
-    }catch(error){
+
+      const storedData = sessionStorage.getItem('cacheData');
+      if (storedData) {
+        setData(JSON.parse(storedData));
+      } else {
+        const dataByProvice = await Promise.all(
+          provices.map(fetchDataByProvince)
+        );
+        const flattenedData = dataByProvice.flat();
+        setData(flattenedData);
+
+        sessionStorage.setItem('cacheData', JSON.stringify(flattenedData));
+      }
+    } catch (error) {
       console.error('에러발생', error);
-    }
+    }  
   };
-  
+
   useEffect(() => {
     fetchData();
   }, []);
-  
+
   return (
     <div>
-      {data &&  <Contents data={data}/>}
+      {data && <Contents data={data} />}
     </div>
-  )
+  );
 }
 
