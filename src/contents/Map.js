@@ -18,11 +18,13 @@ const IcoNm = styled.span`
 `;
 
 export default function Map(props) {
+  // 데이터 경로
+  // const items = props.data.response.body.items;
   const [listState, setListState] = useState([]);
   const [countState, setCountState] = useState([]);
 
   // 데이터에서 지역명 변경
-  const modifiedData = props.info.records.map(v => {
+  const modifiedData = props.data.map(v => {
     if (v.ctprvnNm == '전북특별자치도') {
       return { ...v, ctprvnNm: '전라북도' };
     }
@@ -31,6 +33,9 @@ export default function Map(props) {
     }
     if (v.ctprvnNm == '인천광역시') {
       return { ...v, ctprvnNm: '인천' };
+    }
+    if (v.ctprvnNm == '대구광역시') {
+      return { ...v, ctprvnNm: '대구' };
     }
     if (v.ctprvnNm == '강원특별자치도') {
       return { ...v, ctprvnNm: '강원도' };
@@ -62,7 +67,9 @@ export default function Map(props) {
 
     setCountState(stateCounts);
     setListState(stateList);
-  }, [props.info.records]);
+
+    console.log(props.data);
+  }, [props.data]);
 
   return (
     <div className="inner">
@@ -76,7 +83,7 @@ export default function Map(props) {
           <ul className="state_list">
             {listState.map((v, i) => {
               return (
-                <li key={i} className={`state${i}`}>
+                <li key={i} className={`${v}`}>
                   <p>{v}</p>
                   <Circle size={countState[v]}>
                     <IcoNm size={countState[v]}>{countState[v]}</IcoNm>
