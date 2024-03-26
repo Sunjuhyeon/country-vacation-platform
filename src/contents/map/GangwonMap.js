@@ -1,6 +1,24 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Map, MapMarker, CustomOverlayMap } from 'react-kakao-maps-sdk';
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import {
+  Map,
+  MapMarker,
+  CustomOverlayMap
+} from 'react-kakao-maps-sdk';
 import useKakaoLoader from './useKakaoLoader';
+
+const InfoBox = styled.div`
+  max-width: 300px;
+  min-height: 200px;
+  border-radius: 6px;
+  background-color: #fff;
+  border: 2px solid green;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  padding: 10px 15px;
+`;
 
 export default function Gangwon(props) {
   useKakaoLoader();
@@ -89,50 +107,56 @@ export default function Gangwon(props) {
                 return null;
               }
               return (
-                <MapMarker
-                  position={{ lat: lat, lng: lng }}
-                  image={{
-                    src: 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png', // 마커이미지의 주소입니다
-                    size: {
-                      width: 24,
-                      height: 35,
-                    }, // 마커이미지의 크기입니다
-                  }}
-                  clickable={true} // 마커를 클릭했을 때 지도의 클릭 이벤트가 발생하지 않도록 설정합니다
-                  onClick={() => toggleMarker(index)}
-                  title={position.title} // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-                  category={category}
-                >
+                <div>
+                  <MapMarker
+                    position={{ lat: lat, lng: lng }}
+                    image={{
+                      src: 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png', // 마커이미지의 주소입니다
+                      size: {
+                        width: 24,
+                        height: 35,
+                      }, // 마커이미지의 크기입니다
+                    }}
+                    clickable={true} // 마커를 클릭했을 때 지도의 클릭 이벤트가 발생하지 않도록 설정합니다
+                    onClick={() => toggleMarker(index)}
+                    title={position.title} // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+                    category={category}
+                  ></MapMarker>
                   {isOpen[index] && (
-                    <div
+                    <CustomOverlayMap
                       position={{ lat: lat, lng: lng }}
+                      yAnchor={1.1} // 마커와의 간격을 조정할 수 있다
                     >
-                      <div>
-                        <p>{category}</p>
-                        <p>{position.exprnVilageNm}</p>
-                        <p>{position.rdnmadr}</p>
-                        <ul>
-                          {position.exprnCn
-                            .split('+')
-                            .slice(0, 3)
-                            .map((item, idx) => {
-                              return <li>{item}</li>;
-                            })}
-                        </ul>
-                        <p>{position.phoneNumber}</p>
-                        <p>
-                          <a href={position.homepageUrl} target="_blank">
-                            {position.homepageUrl}
-                          </a>
-                        </p>
-                      </div>
-
-                      <button type="button" onClick={() => toggleMarker(index)}>
-                        close
-                      </button>
-                    </div>
+                      <InfoBox>
+                        <div className="info_list">
+                          <p className={`info_cate ${category}`}>{category}</p>
+                          <p className="info_title">{position.exprnVilageNm}</p>
+                          <ul className='info_act'>
+                            {position.exprnCn
+                              .split('+')
+                              .slice(0, 3)
+                              .map((item, idx) => {
+                                return <li className={`act${idx}`}>{item}</li>;
+                              })}
+                          </ul>
+                          <p>{position.rdnmadr}</p>
+                          <p>{position.phoneNumber}</p>
+                          <p>
+                            <a href={position.homepageUrl} target="_blank">
+                              {position.homepageUrl}
+                            </a>
+                          </p>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => toggleMarker(index)}
+                        >
+                          close
+                        </button>
+                      </InfoBox>
+                    </CustomOverlayMap>
                   )}
-                </MapMarker>
+                </div>
               );
             }
           )}

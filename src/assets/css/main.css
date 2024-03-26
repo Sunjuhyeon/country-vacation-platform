@@ -85,4 +85,52 @@
   padding-bottom: 5px;
   font-size: 15px;
   font-weight: 500;
+}
+
+.info_list .info_cate {
+  display: inline-block;
+  border-radius: 25px;
+  color: #fff;
+  font-weight: 500;
+  font-size: 15px;
+  padding: 5px 10px;
+}
+.info_list .info_cate.농작물경작체험 {
+  background-color: #65C18C;
+}
+.info_list .info_cate.만들기체험 {
+  background-color: #87C4FF;
+}
+.info_list .info_cate.전통문화체험 {
+  background-color: #FF6969;
+}
+.info_list .info_cate.기타 {
+  background-color: #9195F6;
+}
+.info_list .info_title {
+  margin-top: 5px;
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 600;
+  word-break: keep-all;
+}
+.info_list .info_act {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 10px;
+}
+.info_list .info_act li {
+  padding: 3px 5px;
+  border-radius: 3px;
+  font-size: 15px;
+}
+.info_list .info_act li.act0 {
+  background-color: #DBC4F0;
+}
+.info_list .info_act li.act1 {
+  background-color: #FFCACC;
+}
+.info_list .info_act li.act2 {
+  background-color: #D4E2D4;
 }/*# sourceMappingURL=main.css.map */
