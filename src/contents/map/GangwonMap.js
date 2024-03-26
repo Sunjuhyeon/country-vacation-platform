@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Map, MapMarker, MarkerClusterer } from 'react-kakao-maps-sdk';
+import { Map, MapMarker, CustomOverlayMap } from 'react-kakao-maps-sdk';
 import useKakaoLoader from './useKakaoLoader';
 
 export default function Gangwon(props) {
@@ -104,8 +104,10 @@ export default function Gangwon(props) {
                   category={category}
                 >
                   {isOpen[index] && (
-                    <div>
-                      <div className="list_card">
+                    <div
+                      position={{ lat: lat, lng: lng }}
+                    >
+                      <div>
                         <p>{category}</p>
                         <p>{position.exprnVilageNm}</p>
                         <p>{position.rdnmadr}</p>
@@ -119,7 +121,7 @@ export default function Gangwon(props) {
                         </ul>
                         <p>{position.phoneNumber}</p>
                         <p>
-                          <a href={position.homepageUrl} target='_blank'>
+                          <a href={position.homepageUrl} target="_blank">
                             {position.homepageUrl}
                           </a>
                         </p>
