@@ -19,8 +19,6 @@ const IcoNm = styled.span`
 `;
 
 export default function Map(props) {
-  // 데이터 경로
-  // const items = props.data.response.body.items;
   const [listState, setListState] = useState([]);
   const [countState, setCountState] = useState([]);
 
@@ -85,7 +83,7 @@ export default function Map(props) {
             {listState.map((v, i) => {
               return (
                 <li key={i} className={`${v}`}>
-                  <Link to='/gangwon'>
+                  <Link to="/gangwonMap">
                     <p>{v}</p>
                     <Circle size={countState[v]}>
                       <IcoNm size={countState[v]}>{countState[v]}</IcoNm>

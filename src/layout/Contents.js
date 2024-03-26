@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom';
-import Map from '../contents/Map'
-import Gangwon from '../contents/detail/Gangwon';
+import Map from '../contents/CityMap'
+import GangwonMap from '../contents/map/GangwonMap';
+import GangwonList from '../contents/list/GangwonList';
 
 export default function Contents(props) {
   const gangwonData = props.data.filter(
@@ -11,7 +12,8 @@ export default function Contents(props) {
     <div>
       <Routes>
         <Route path="/" element={<Map data={props.data} />} />
-        <Route path="/gangwon" element={<Gangwon data={gangwonData} />} />
+        <Route path="/gangwonMap" element={<GangwonMap data={gangwonData} />} />
+        <Route path="/gangwonList" element={<GangwonList data={gangwonData} />} />
       </Routes>
     </div>
   );
