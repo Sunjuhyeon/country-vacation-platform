@@ -87,6 +87,9 @@
   font-weight: 500;
 }
 
+.info_list {
+  width: 100%;
+}
 .info_list .info_cate {
   display: inline-block;
   border-radius: 25px;
@@ -96,19 +99,22 @@
   padding: 5px 10px;
 }
 .info_list .info_cate.농작물경작체험 {
-  background-color: #65C18C;
+  background-color: #AACB73;
 }
 .info_list .info_cate.만들기체험 {
-  background-color: #87C4FF;
+  background-color: #34d9f2;
 }
 .info_list .info_cate.전통문화체험 {
-  background-color: #FF6969;
+  background-color: #FF9B9B;
 }
-.info_list .info_cate.기타 {
-  background-color: #9195F6;
+.info_list .info_cate.건강 {
+  background-color: rgb(248, 207, 0);
+}
+.info_list .info_cate.농촌체험 {
+  background-color: rgb(235, 161, 235);
 }
 .info_list .info_title {
-  margin-top: 5px;
+  margin-top: 10px;
   font-size: 20px;
   line-height: 24px;
   font-weight: 600;
@@ -118,7 +124,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 5px;
-  margin-top: 10px;
+  margin-top: 15px;
 }
 .info_list .info_act li {
   padding: 3px 5px;
@@ -126,11 +132,65 @@
   font-size: 15px;
 }
 .info_list .info_act li.act0 {
-  background-color: #DBC4F0;
+  background-color: #D2E0FB;
 }
 .info_list .info_act li.act1 {
-  background-color: #FFCACC;
+  background-color: #F9F3CC;
 }
 .info_list .info_act li.act2 {
-  background-color: #D4E2D4;
+  background-color: #D7E5CA;
+}
+.info_list .info_contact {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.info_list .info_contact li {
+  width: 100%;
+  display: flex;
+  align-items: start;
+  gap: 5px;
+  word-break: break-all;
+  color: #787878;
+  font-size: 15px;
+  line-height: 22px;
+}
+.info_list .info_contact li.contact1::before {
+  content: "";
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  background: url(../images/ico/contact1.svg) no-repeat center;
+  background-size: contain;
+  flex: 0 0 auto;
+  margin-top: 4px;
+}
+.info_list .info_contact li.contact2::before {
+  content: "";
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  background: url(../images/ico/contact2.svg) no-repeat center;
+  background-size: contain;
+  flex: 0 0 auto;
+  margin-top: 4px;
+}
+.info_list .info_contact li.contact3::before {
+  content: "";
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  background: url(../images/ico/contact3.svg) no-repeat center;
+  background-size: contain;
+  flex: 0 0 auto;
+  margin-top: 4px;
+}
+
+.map_inner .close_btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 15px;
+  height: 15px;
 }/*# sourceMappingURL=main.css.map */

@@ -13,6 +13,10 @@ button {
   cursor: pointer;
 }
 
+a {
+  color: #abd286;
+}
+
 .w_set {
   width: 1080px;
   margin-left: auto !important;
@@ -38,6 +42,12 @@ button {
   font-size: 14px;
   color: #d84949;
   padding: 3px 10px;
+}
+
+.close_btn {
+  background: url(../images/ico/close.svg) no-repeat center;
+  background-size: contain;
+  font-size: 0;
 }
 
 .tit_wrap {
