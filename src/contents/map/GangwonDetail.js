@@ -37,7 +37,19 @@ const cityCoordinates = {
   강릉시: { lat: 37.751853, lng: 128.876057 },
   동해시: { lat: 37.505447, lng: 129.097253 },
   속초시: { lat: 38.165187, lng: 128.551708 },
-  삼척시: { lat: 38.165187, lng: 128.551708 },
+  삼척시: { lat: 37.28536762, lng: 129.1829375 },
+  태백시: { lat: 37.093246, lng: 129.037977 },
+  홍천군: { lat: 37.68569876, lng: 127.9752552 },
+  철원군: { lat: 38.24492485, lng: 127.3430955 },
+  횡성군: { lat: 37.473491, lng: 128.020853 },
+  평창군: { lat: 37.473813, lng: 128.402503 },
+  정선군: { lat: 37.364044, lng: 128.715579 },
+  영월군: { lat: 37.1437245, lng: 128.4622759 },
+  인제군: { lat: 38.078378, lng: 128.2435696 },
+  고성군: { lat: 38.38799045, lng: 128.416207 },
+  양양군: { lat: 38.03328216, lng: 128.560168 },
+  화천군: { lat: 38.13393909, lng: 127.6767375 },
+  양구군: { lat: 38.14409763, lng: 127.981198 },
 };
 
 export default function GangwonDetail({data}) {
@@ -50,12 +62,13 @@ export default function GangwonDetail({data}) {
   const [mapCenter, setMapCenter] = useState({lat: 37.8304115, lng: 128.2260705}); //중심좌표 관리
   
   const toggleMarker = (index, position) => {
-    // event.cancelBubble();
-    console.log('마커 클릭')
     setIsOpen(prevState => {
-      const newState = prevState.map((place, i) =>
-      i === index ? !place : false
-      );
+      // 새로운 상태 배열 생성
+      const newState = new Array(prevState.length).fill(false);
+      // 클릭된 마커의 isOpen 상태를 토글
+      newState[index] = !prevState[index];
+      // 새로운 상태 반환
+      console.log(index, position)
       return newState;
     });
     setMapCenter(position);
@@ -110,7 +123,7 @@ export default function GangwonDetail({data}) {
             width: '100vw',
             height: '100vh',
           }}
-          level={9} // 지도의 확대 레벨
+          level={10} // 지도의 확대 레벨
         >
           {filteredData.map((position, index) => {
             const lat =
@@ -128,8 +141,9 @@ export default function GangwonDetail({data}) {
               return null;
             }
             return (
-              <div key={index}>
+              <div>
                 <MapMarker
+                  key={index}
                   position={{ lat: lat, lng: lng }}
                   image={{
                     src: getCategoryImage(category), // 마커이미지의 주소입니다

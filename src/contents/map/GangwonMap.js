@@ -48,7 +48,6 @@ function Gangwon(props) {
   const [filteredCategory, setFilteredCategory] = useState(null); //체험프로그램 구분 관리
   const [filteredCity, setFilteredCity] = useState(null); //시군구명 관리
   const [mapCenter, setMapCenter] = useState({lat: 37.8304115, lng: 128.2260705}); //중심좌표 관리
-  const [mapLevel, setMapLevel] = useState(10); //지도 레벨 관리
 
   // const filteredData = {};
   // cityName.forEach(city => {
@@ -119,7 +118,7 @@ function Gangwon(props) {
             width: '100vw',
             height: '100vh',
           }}
-          level={mapLevel} // 지도의 확대 레벨
+          level={11} // 지도의 확대 레벨
         >
           {props.data &&
             props.data.map((position, index) => {
