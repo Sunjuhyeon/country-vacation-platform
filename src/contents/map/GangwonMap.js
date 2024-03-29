@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
+import {InfoBox} from './styled'
 import {
   Map,
   MapMarker,
@@ -12,43 +12,22 @@ import ImgMap3 from '../../assets/images/ico/map_cate3.png';
 import ImgMap4 from '../../assets/images/ico/map_cate4.png';
 import ImgMap5 from '../../assets/images/ico/map_cate5.png';
 
+const MemoizeGangwon = React.memo(Gangwon);
 
-const InfoBox = styled.div`
-  position: relative;
-  width: 300px;
-  min-height: 200px;
-  border-radius: 15px;
-  background-color: #fff;
-  border: 2px solid #c4d7b2;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: start;
-  padding: 15px;
-  white-space: break-spaces;
-  &::before {
-    content: '';
-    display: inline-block;
-    position: absolute;
-    bottom: -8px;
-    border: #c4d7b2 solid;
-    border-width: 0px 2px 2px 0px;
-    left: 50%;
-    transform: translateX(-50%) rotate(45deg);
-    width: 11px;
-    height: 11px;
-    background-color: #fff;
-  }
-`;
+export default function MemoizeGangwonComponent(props){
+  return <MemoizeGangwon {...props}/>
+}
 
-export default function Gangwon(props) {
+function Gangwon(props) {
   useKakaoLoader();
   
-  const [isOpen, setIsOpen] = useState(false);
-  const [filteredCategory, setFilteredCategory] = useState(null);
-  const [filteredCity, setFilteredCity] = useState(null);
-  const [mapCenter, setMapCenter] = useState({lat: 37.8304115, lng: 128.2260705});
+  const [isOpen, setIsOpen] = useState(false); //커스텀오버레이 관리
+  const [filteredCategory, setFilteredCategory] = useState(null); //체험프로그램 구분 관리
+  const [filteredCity, setFilteredCity] = useState(null); //시군구명 관리
+  const [mapCenter, setMapCenter] = useState({lat: 37.8304115, lng: 128.2260705}); //중심좌표 관리
+  const [mapLevel, setMapLevel] = useState(10); //지도 레벨 관리
 
+  //filteredCity를 위한 지역명 변수
   const cityName = [
     '원주시',
     '춘천시',
@@ -87,21 +66,45 @@ export default function Gangwon(props) {
   }
 
   // 카테고리 필터링 함수
-  const handleCategoryFilter = category => {
-    console.log('필터링 된 카테고리 : ', category)
-    setFilteredCategory(category);
-  };
+  // const handleCategoryFilter = category => {
+  //   console.log('필터링 된 카테고리 : ', category)
+  //   setFilteredCategory(category);
+  // };
+
+  // 체험프로그램 +로 나누어 첫번째 단어로 구분
   const getCategory = (exprnSe) => {
     if(!exprnSe) return '농촌체험';
     const categorries = exprnSe.split('+');
     return categorries[0] === '기타' ? '농촌체험' : categorries[0];
   }
 
+  const cityCoordintes = {
+    원주시: { lat: 37.293401, lng: 127.946027 },
+    춘천시: { lat: 37.90812496, lng: 127.7812437 },
+  };
+
   // 지역 필터링 함수
   const handleCityFilter = city => {
     console.log('필터링된 지역 :', city)
     setFilteredCity(city);
+
+  let coordinates = cityCoordintes[city];
+  if (!coordinates) {
+    coordinates = { lat: 37.8304115, lng: 128.2260705 };
+  }
+
+  setMapCenter(coordinates);
+
+  console.log('coordinates', coordinates)
+
+  const level = city === null ? 10 : 8;
+  setMapLevel(level);
   };
+
+  useEffect(() => {
+    console.log('mapCenter:', mapCenter);
+  }, [mapCenter]);
+
   // 카테고리 필터링 이미지_이미지 매핑 객체 생성
   const categoryImage = {
     '농작물경작체험': ImgMap1,
@@ -118,48 +121,21 @@ export default function Gangwon(props) {
 
   return (
     <div className="map_inner">
-      {/* <div>
-        <button type="button" onClick={() => handleCategoryFilter(null)}>
-          전체
-        </button>
-        <button
-          type="button"
-          onClick={() => handleCategoryFilter('농작물경작체험')}
-        >
-          농작물
-        </button>
-        <button
-          type="button"
-          onClick={() => handleCategoryFilter('만들기체험')}
-        >
-          만들기
-        </button>
-        <button
-          type="button"
-          onClick={() => handleCategoryFilter('전통문화체험')}
-        >
-          전통문화체험
-        </button>
-        <button type="button" onClick={() => handleCategoryFilter('건강')}>
-          건강
-        </button>
-        <button type="button" onClick={() => handleCategoryFilter('농촌체험')}>
-          그 외
-        </button>
-      </div> */}
-      <div>
-        <button type='button' onClick={() => handleCityFilter(null)}>
-          전체
-        </button>
-        {cityName.map((city, index) => (
-          <button
-            key={index}
-            type="button"
-            onClick={() => handleCityFilter(city)}
-          >
-            {city}
+      <div className='btn_wrap'>
+        <div className='city_btn_wrap'>
+          <button type='button' onClick={() => handleCityFilter(null)}>
+            전체
           </button>
-        ))}
+          {cityName.map((city, index) => (
+            <button
+              key={index}
+              type="button"
+              onClick={() => handleCityFilter(city)}
+            >
+              {city}
+            </button>
+          ))}
+        </div>
       </div>
       <div>
         <Map // 지도를 표시할 Container
@@ -171,7 +147,7 @@ export default function Gangwon(props) {
             width: '100vw',
             height: '100vh',
           }}
-          level={10} // 지도의 확대 레벨
+          level={mapLevel} // 지도의 확대 레벨
         >
           {props.data &&
             props.data.map((position, index) => {
@@ -210,38 +186,51 @@ export default function Gangwon(props) {
                     <CustomOverlayMap
                       position={{ lat: lat, lng: lng }}
                       yAnchor={1.15} // 마커와의 간격을 조정할 수 있다
+                      zIndex={1000}
                     >
                       <InfoBox>
-                        <div className="info_list">
-                          <p className={`info_cate ${category}`}>{category}</p>
-                          <p className="info_title">{position.exprnVilageNm}</p>
-                          <ul className="info_act">
-                            {position.exprnCn
-                              .split('+')
-                              .slice(0, 3)
-                              .map((item, idx) => {
-                                return <li className={`act${idx}`}>{item}</li>;
-                              })}
-                          </ul>
-                          <ul className="info_contact">
-                            {position.rdnmadr && (
-                              <li className="contact1">
-                                <p>{position.rdnmadr}</p>
-                              </li>
-                            )}
-                            {position.phoneNumber && (
-                              <li className="contact2">
-                                <p>{position.phoneNumber}</p>
-                              </li>
-                            )}
-                            {position.homepageUrl && (
-                              <li className="contact3">
-                                <a href={position.homepageUrl} target="_blank">
-                                  {position.homepageUrl}
-                                </a>
-                              </li>
-                            )}
-                          </ul>
+                        <div className="info_overlay">
+                          <div className='info_list'>
+                            <p className={`info_cate ${category}`}>{category}</p>
+                            <p className="info_title">{position.exprnVilageNm}</p>
+                            <ul className="info_act">
+                              {position.exprnCn
+                                .split('+')
+                                .slice(0, 3)
+                                .map((item, idx) => {
+                                  return <li className={`act${idx}`}>{item}</li>;
+                                })}
+                            </ul>
+                            <ul className="info_contact">
+                              {position.rdnmadr && (
+                                <li className="contact1">
+                                  <p>{position.rdnmadr}</p>
+                                </li>
+                              )}
+                              {position.phoneNumber && (
+                                <li className="contact2">
+                                  <p>{position.phoneNumber}</p>
+                                </li>
+                              )}
+                              {position.homepageUrl && (
+                                <li className="contact3">
+                                  <a href={position.homepageUrl} target="_blank">
+                                    {position.homepageUrl}
+                                  </a>
+                                </li>
+                              )}
+                            </ul>
+                          </div>
+                          <div className="map_link">
+                            <span>길찾기</span>
+                            <a
+                              href={`https://map.kakao.com/link/to/${position.exprnVilageNm},${lat},${lng}`}
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              길찾기
+                            </a>
+                          </div>
                         </div>
                         <button
                           type="button"

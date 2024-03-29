@@ -87,97 +87,169 @@
   }
 }
 
-.info_list{
+.info_overlay{
   width: 100%;
-  .info_cate{
-    display: inline-block;
-    // background-color: #A0C49D;
-    border-radius: 25px;
-    color: #fff;
-    font-weight: 500;
-    font-size: 15px;
-    padding: 5px 10px;
-    &.농작물경작체험{
-      background-color: #AACB73;
-    }
-    &.만들기체험{
-      background-color: #34d9f2;
-    }
-    &.전통문화체험{
-      background-color: #FF9B9B;
-    }
-    &.건강 {
-      background-color: rgb(248, 207, 0);
-    }
-    &.농촌체험{
-      background-color: rgb(235, 161, 235);
-    }
-  }
-  .info_title{
-    margin-top: 10px;
-    font-size: 20px;
-    line-height: 24px;
-    font-weight: 600;
-    word-break: keep-all;
-  }
-  .info_act{
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
-    margin-top: 15px;
-    li{
-      padding: 3px 5px;
-      border-radius: 3px;
+  .info_list{
+    padding: 15px;
+    .info_cate{
+      display: inline-block;
+      // background-color: #A0C49D;
+      border-radius: 25px;
+      color: #fff;
+      font-weight: 500;
       font-size: 15px;
-      &.act0{
-        background-color: #D2E0FB;
+      padding: 5px 10px;
+      &.농작물경작체험{
+        background-color: #AACB73;
       }
-      &.act1{
-        background-color: #F9F3CC;
+      &.만들기체험{
+        background-color: #34d9f2;
       }
-      &.act2{
-        background-color: #D7E5CA;
+      &.전통문화체험{
+        background-color: #FF9B9B;
+      }
+      &.건강 {
+        background-color: rgb(248, 207, 0);
+      }
+      &.농촌체험{
+        background-color: rgb(235, 161, 235);
       }
     }
-  }
-  .info_contact{
-    margin-top: 15px;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    li{
-      width: 100%;
+    .info_title{
+      margin-top: 10px;
+      font-size: 20px;
+      line-height: 24px;
+      font-weight: 600;
+      word-break: keep-all;
+    }
+    .info_act{
       display: flex;
-      align-items: start;
+      flex-wrap: wrap;
       gap: 5px;
-      word-break: break-all;
-      color: #787878;
-      font-size: 15px;
-      line-height: 22px;
-      @for $i from 1 to 4{
-        &.contact#{$i}{
-          &::before{
-            content: "";
-            display: inline-block;
-            width: 15px;
-            height: 15px;
-            background: url(../images/ico/contact#{$i}.svg) no-repeat center;
-            background-size: contain;
-            flex: 0 0 auto;
-            margin-top: 4px;
+      margin-top: 15px;
+      li{
+        padding: 3px 5px;
+        border-radius: 3px;
+        font-size: 15px;
+        &.act0{
+          background-color: #D2E0FB;
+        }
+        &.act1{
+          background-color: #F9F3CC;
+        }
+        &.act2{
+          background-color: #D7E5CA;
+        }
+      }
+    }
+    .info_contact{
+      margin-top: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      li{
+        width: 100%;
+        display: flex;
+        align-items: start;
+        gap: 5px;
+        word-break: break-all;
+        color: #787878;
+        font-size: 15px;
+        line-height: 22px;
+        @for $i from 1 to 4{
+          &.contact#{$i}{
+            &::before{
+              content: "";
+              display: inline-block;
+              width: 15px;
+              height: 15px;
+              background: url(../images/ico/contact#{$i}.svg) no-repeat center;
+              background-size: contain;
+              flex: 0 0 auto;
+              margin-top: 4px;
+            }
           }
         }
+        >a {
+          color: #abd286;
+        }
+      }
+    }
+  }
+  .map_link{
+    padding: 10px 15px 15px;
+    border-top: 1px solid #e9e9e9;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    >a{
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      font-size: 0;
+      background: url(../images/ico/kakao_map_icon.png) no-repeat center;
+      background-size: contain;
+    }
+    >span{
+      font-size: 17px;
+      color: #77b53d;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      &::before{
+        content: "";
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        background: url(../images/ico/contact4.svg) no-repeat center;
+        background-size: contain;
       }
     }
   }
 }
 .map_inner{
+  position: relative;
   .close_btn{
     position: absolute;
     top: 15px;
     right: 15px;
     width: 15px;
     height: 15px;
+  }
+}
+
+.btn_wrap{
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  padding: 20px;
+  .city_btn_wrap{
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    overflow-x: auto;
+    -ms-overflow-style: none;
+    /* 인터넷 익스플로러 */
+    scrollbar-width: none;
+    /* 파이어폭스 */
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    >button{
+      background-color: #fff;
+      padding: 8px 20px;
+      font-size: 15px;
+      border-radius: 25px;
+      flex: 0 0 auto;
+      border: 1px solid #dadce0;
+      box-shadow: rgba(217, 219, 224, 0.5) 0px 0px 3px;
+      transition: 0.2s;
+      &:hover{
+        background-color: #f6ffed;
+        border-color:#c4d7b2;
+      }
+    }
   }
 }
 

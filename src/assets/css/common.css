@@ -13,10 +13,6 @@ button {
   cursor: pointer;
 }
 
-a {
-  color: #abd286;
-}
-
 .w_set {
   width: 1080px;
   margin-left: auto !important;

@@ -87,10 +87,13 @@
   font-weight: 500;
 }
 
-.info_list {
+.info_overlay {
   width: 100%;
 }
-.info_list .info_cate {
+.info_overlay .info_list {
+  padding: 15px;
+}
+.info_overlay .info_list .info_cate {
   display: inline-block;
   border-radius: 25px;
   color: #fff;
@@ -98,55 +101,55 @@
   font-size: 15px;
   padding: 5px 10px;
 }
-.info_list .info_cate.농작물경작체험 {
+.info_overlay .info_list .info_cate.농작물경작체험 {
   background-color: #AACB73;
 }
-.info_list .info_cate.만들기체험 {
+.info_overlay .info_list .info_cate.만들기체험 {
   background-color: #34d9f2;
 }
-.info_list .info_cate.전통문화체험 {
+.info_overlay .info_list .info_cate.전통문화체험 {
   background-color: #FF9B9B;
 }
-.info_list .info_cate.건강 {
+.info_overlay .info_list .info_cate.건강 {
   background-color: rgb(248, 207, 0);
 }
-.info_list .info_cate.농촌체험 {
+.info_overlay .info_list .info_cate.농촌체험 {
   background-color: rgb(235, 161, 235);
 }
-.info_list .info_title {
+.info_overlay .info_list .info_title {
   margin-top: 10px;
   font-size: 20px;
   line-height: 24px;
   font-weight: 600;
   word-break: keep-all;
 }
-.info_list .info_act {
+.info_overlay .info_list .info_act {
   display: flex;
   flex-wrap: wrap;
   gap: 5px;
   margin-top: 15px;
 }
-.info_list .info_act li {
+.info_overlay .info_list .info_act li {
   padding: 3px 5px;
   border-radius: 3px;
   font-size: 15px;
 }
-.info_list .info_act li.act0 {
+.info_overlay .info_list .info_act li.act0 {
   background-color: #D2E0FB;
 }
-.info_list .info_act li.act1 {
+.info_overlay .info_list .info_act li.act1 {
   background-color: #F9F3CC;
 }
-.info_list .info_act li.act2 {
+.info_overlay .info_list .info_act li.act2 {
   background-color: #D7E5CA;
 }
-.info_list .info_contact {
+.info_overlay .info_list .info_contact {
   margin-top: 15px;
   display: flex;
   flex-direction: column;
   gap: 5px;
 }
-.info_list .info_contact li {
+.info_overlay .info_list .info_contact li {
   width: 100%;
   display: flex;
   align-items: start;
@@ -156,7 +159,7 @@
   font-size: 15px;
   line-height: 22px;
 }
-.info_list .info_contact li.contact1::before {
+.info_overlay .info_list .info_contact li.contact1::before {
   content: "";
   display: inline-block;
   width: 15px;
@@ -166,7 +169,7 @@
   flex: 0 0 auto;
   margin-top: 4px;
 }
-.info_list .info_contact li.contact2::before {
+.info_overlay .info_list .info_contact li.contact2::before {
   content: "";
   display: inline-block;
   width: 15px;
@@ -176,7 +179,7 @@
   flex: 0 0 auto;
   margin-top: 4px;
 }
-.info_list .info_contact li.contact3::before {
+.info_overlay .info_list .info_contact li.contact3::before {
   content: "";
   display: inline-block;
   width: 15px;
@@ -186,11 +189,82 @@
   flex: 0 0 auto;
   margin-top: 4px;
 }
+.info_overlay .info_list .info_contact li > a {
+  color: #abd286;
+}
+.info_overlay .map_link {
+  padding: 10px 15px 15px;
+  border-top: 1px solid #e9e9e9;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.info_overlay .map_link > a {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  font-size: 0;
+  background: url(../images/ico/kakao_map_icon.png) no-repeat center;
+  background-size: contain;
+}
+.info_overlay .map_link > span {
+  font-size: 17px;
+  color: #77b53d;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.info_overlay .map_link > span::before {
+  content: "";
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background: url(../images/ico/contact4.svg) no-repeat center;
+  background-size: contain;
+}
 
+.map_inner {
+  position: relative;
+}
 .map_inner .close_btn {
   position: absolute;
   top: 15px;
   right: 15px;
   width: 15px;
   height: 15px;
+}
+
+.btn_wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  padding: 20px;
+}
+.btn_wrap .city_btn_wrap {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  overflow-x: auto;
+  -ms-overflow-style: none;
+  /* 인터넷 익스플로러 */
+  scrollbar-width: none;
+  /* 파이어폭스 */
+}
+.btn_wrap .city_btn_wrap::-webkit-scrollbar {
+  display: none;
+}
+.btn_wrap .city_btn_wrap > button {
+  background-color: #fff;
+  padding: 8px 20px;
+  font-size: 15px;
+  border-radius: 25px;
+  flex: 0 0 auto;
+  border: 1px solid #dadce0;
+  box-shadow: rgba(217, 219, 224, 0.5) 0px 0px 3px;
+  transition: 0.2s;
+}
+.btn_wrap .city_btn_wrap > button:hover {
+  background-color: #f6ffed;
+  border-color: #c4d7b2;
 }/*# sourceMappingURL=main.css.map */
