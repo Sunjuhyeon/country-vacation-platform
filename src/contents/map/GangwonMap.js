@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {InfoBox} from './styled'
+// import styled from 'styled-components';
 import {
   Map,
   MapMarker,
@@ -11,6 +12,7 @@ import ImgMap2 from '../../assets/images/ico/map_cate2.png';
 import ImgMap3 from '../../assets/images/ico/map_cate3.png';
 import ImgMap4 from '../../assets/images/ico/map_cate4.png';
 import ImgMap5 from '../../assets/images/ico/map_cate5.png';
+import Button from '../side/Button';
 
 const MemoizeGangwon = React.memo(Gangwon);
 
@@ -18,6 +20,27 @@ export default function MemoizeGangwonComponent(props){
   return <MemoizeGangwon {...props}/>
 }
 
+//filteredCity를 위한 지역명 변수
+const cityName = [
+  '원주시',
+  '춘천시',
+  '강릉시',
+  '동해시',
+  '속초시',
+  '삼척시',
+  '태백시',
+  '홍천군',
+  '철원군',
+  '횡성군',
+  '평창군',
+  '정선군',
+  '영월군',
+  '인제군',
+  '고성군',
+  '양양군',
+  '화천군',
+  '양구군',
+];
 function Gangwon(props) {
   useKakaoLoader();
   
@@ -27,28 +50,10 @@ function Gangwon(props) {
   const [mapCenter, setMapCenter] = useState({lat: 37.8304115, lng: 128.2260705}); //중심좌표 관리
   const [mapLevel, setMapLevel] = useState(10); //지도 레벨 관리
 
-  //filteredCity를 위한 지역명 변수
-  const cityName = [
-    '원주시',
-    '춘천시',
-    '강릉시',
-    '동해시',
-    '속초시',
-    '삼척시',
-    '태백시',
-    '홍천군',
-    '철원군',
-    '횡성군',
-    '평창군',
-    '정선군',
-    '영월군',
-    '인제군',
-    '고성군',
-    '양양군',
-    '화천군',
-    '양구군',
-  ];
-
+  // const filteredData = {};
+  // cityName.forEach(city => {
+  //   filteredData[city] = props.data.filter(item => item.signguNm === city);
+  // });
   useEffect(() => {
     console.log(props.data)
 
@@ -70,6 +75,11 @@ function Gangwon(props) {
   //   console.log('필터링 된 카테고리 : ', category)
   //   setFilteredCategory(category);
   // };
+  // 지역 필터링 함수
+  // const handleCityFilter = city => {
+  //   console.log('필터링된 지역 :', city)
+  //   setFilteredCity(city);
+  // };
 
   // 체험프로그램 +로 나누어 첫번째 단어로 구분
   const getCategory = (exprnSe) => {
@@ -77,33 +87,6 @@ function Gangwon(props) {
     const categorries = exprnSe.split('+');
     return categorries[0] === '기타' ? '농촌체험' : categorries[0];
   }
-
-  const cityCoordintes = {
-    원주시: { lat: 37.293401, lng: 127.946027 },
-    춘천시: { lat: 37.90812496, lng: 127.7812437 },
-  };
-
-  // 지역 필터링 함수
-  const handleCityFilter = city => {
-    console.log('필터링된 지역 :', city)
-    setFilteredCity(city);
-
-  let coordinates = cityCoordintes[city];
-  if (!coordinates) {
-    coordinates = { lat: 37.8304115, lng: 128.2260705 };
-  }
-
-  setMapCenter(coordinates);
-
-  console.log('coordinates', coordinates)
-
-  const level = city === null ? 10 : 8;
-  setMapLevel(level);
-  };
-
-  useEffect(() => {
-    console.log('mapCenter:', mapCenter);
-  }, [mapCenter]);
 
   // 카테고리 필터링 이미지_이미지 매핑 객체 생성
   const categoryImage = {
@@ -113,30 +96,19 @@ function Gangwon(props) {
     '건강' : ImgMap4,
     '농촌체험' : ImgMap5
   };
-
+  
   // 이미지 매핑 함수
   const getCategoryImage = (category) => {
     return categoryImage[category] || ImgMap5;
   };
 
+  useEffect(() => {
+    console.log('mapCenter:', mapCenter);
+  }, [mapCenter]);
+
   return (
     <div className="map_inner">
-      <div className='btn_wrap'>
-        <div className='city_btn_wrap'>
-          <button type='button' onClick={() => handleCityFilter(null)}>
-            전체
-          </button>
-          {cityName.map((city, index) => (
-            <button
-              key={index}
-              type="button"
-              onClick={() => handleCityFilter(city)}
-            >
-              {city}
-            </button>
-          ))}
-        </div>
-      </div>
+      <Button cityName={cityName} />
       <div>
         <Map // 지도를 표시할 Container
           id="map"
@@ -186,19 +158,24 @@ function Gangwon(props) {
                     <CustomOverlayMap
                       position={{ lat: lat, lng: lng }}
                       yAnchor={1.15} // 마커와의 간격을 조정할 수 있다
-                      zIndex={1000}
                     >
                       <InfoBox>
                         <div className="info_overlay">
-                          <div className='info_list'>
-                            <p className={`info_cate ${category}`}>{category}</p>
-                            <p className="info_title">{position.exprnVilageNm}</p>
+                          <div className="info_list">
+                            <p className={`info_cate ${category}`}>
+                              {category}
+                            </p>
+                            <p className="info_title">
+                              {position.exprnVilageNm}
+                            </p>
                             <ul className="info_act">
                               {position.exprnCn
                                 .split('+')
                                 .slice(0, 3)
                                 .map((item, idx) => {
-                                  return <li className={`act${idx}`}>{item}</li>;
+                                  return (
+                                    <li className={`act${idx}`}>{item}</li>
+                                  );
                                 })}
                             </ul>
                             <ul className="info_contact">
@@ -214,7 +191,10 @@ function Gangwon(props) {
                               )}
                               {position.homepageUrl && (
                                 <li className="contact3">
-                                  <a href={position.homepageUrl} target="_blank">
+                                  <a
+                                    href={position.homepageUrl}
+                                    target="_blank"
+                                  >
                                     {position.homepageUrl}
                                   </a>
                                 </li>

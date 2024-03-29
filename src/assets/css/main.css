@@ -254,7 +254,7 @@
 .btn_wrap .city_btn_wrap::-webkit-scrollbar {
   display: none;
 }
-.btn_wrap .city_btn_wrap > button {
+.btn_wrap .city_btn_wrap > a {
   background-color: #fff;
   padding: 8px 20px;
   font-size: 15px;
@@ -264,7 +264,7 @@
   box-shadow: rgba(217, 219, 224, 0.5) 0px 0px 3px;
   transition: 0.2s;
 }
-.btn_wrap .city_btn_wrap > button:hover {
+.btn_wrap .city_btn_wrap > a:hover {
   background-color: #f6ffed;
   border-color: #c4d7b2;
 }/*# sourceMappingURL=main.css.map */
