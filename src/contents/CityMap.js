@@ -18,24 +18,6 @@ const IcoNm = styled.span`
     `${Math.min(Math.max((size / 30) * 5, 20), 32)}px`};
 `;
 
-const allCity = [
-  '강원특별자치도',
-  '경기도',
-  '전북특별자치도',
-  '전라남도',
-  '광주광역시',
-  '인천광역시',
-  '대구광역시',
-  '대전광역시',
-  '세종특별자치시',
-  '울산광역시',
-  '부산광역시',
-  '충청남도',
-  '충청북도',
-  '경상남도',
-  '경상북도'
-]
-
 export default function Map(props) {
   const [listState, setListState] = useState([]);
   const [countState, setCountState] = useState([]);

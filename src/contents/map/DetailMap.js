@@ -8,48 +8,36 @@ import ImgMap3 from '../../assets/images/ico/map_cate3.png';
 import ImgMap4 from '../../assets/images/ico/map_cate4.png';
 import ImgMap5 from '../../assets/images/ico/map_cate5.png';
 import Button from '../side/Button';
+import {
+  Gangwon,
+  Gyeonggi,
+  Incheon,
+  Chungbuk,
+  Chungnam,
+  DaejeonSejong,
+  Daegu,
+  Gyeongbuk,
+  Gyeongnam,
+  UlsanBusan,
+  Jeonbuk,
+  Jeonnam,
+  Jeju,
+} from './cityName';
 
-//filteredCity를 위한 지역명 변수
-const cityName = [
-  '원주시',
-  '춘천시',
-  '강릉시',
-  '동해시',
-  '속초시',
-  '삼척시',
-  '태백시',
-  '홍천군',
-  '철원군',
-  '횡성군',
-  '평창군',
-  '정선군',
-  '영월군',
-  '인제군',
-  '고성군',
-  '양양군',
-  '화천군',
-  '양구군',
-];
-
-const cityCoordinates = {
-  원주시: { lat: 37.344446, lng: 127.949458 },
-  춘천시: { lat: 37.885609, lng: 127.72999 },
-  강릉시: { lat: 37.751853, lng: 128.876057 },
-  동해시: { lat: 37.505447, lng: 129.097253 },
-  속초시: { lat: 38.165187, lng: 128.551708 },
-  삼척시: { lat: 37.28536762, lng: 129.1829375 },
-  태백시: { lat: 37.093246, lng: 129.037977 },
-  홍천군: { lat: 37.68569876, lng: 127.9752552 },
-  철원군: { lat: 38.24492485, lng: 127.3430955 },
-  횡성군: { lat: 37.473491, lng: 128.020853 },
-  평창군: { lat: 37.473813, lng: 128.402503 },
-  정선군: { lat: 37.364044, lng: 128.715579 },
-  영월군: { lat: 37.1437245, lng: 128.4622759 },
-  인제군: { lat: 38.078378, lng: 128.2435696 },
-  고성군: { lat: 38.38799045, lng: 128.416207 },
-  양양군: { lat: 38.03328216, lng: 128.560168 },
-  화천군: { lat: 38.13393909, lng: 127.6767375 },
-  양구군: { lat: 38.14409763, lng: 127.981198 },
+const cityLocation = {
+  경기도: Gyeonggi,
+  전라북도: Jeonbuk,
+  전라남도: Jeonnam,
+  인천: Incheon,
+  강원도: Gangwon,
+  제주도: Jeju,
+  대전·세종: DaejeonSejong,
+  대구: Daegu,
+  울산·부산: UlsanBusan,
+  충청남도: Chungnam,
+  충청북도: Chungbuk,
+  경상북도: Gyeongbuk,
+  경상남도: Gyeongnam,
 };
 
 export default function DetailMap({data}) {
@@ -112,7 +100,7 @@ export default function DetailMap({data}) {
 
   return (
     <div className="map_inner">
-      <Button cityName={cityName} />
+      {/* <Button locaion={cityLocation} /> */}
       <div>
         <Map // 지도를 표시할 Container
           id="map"
