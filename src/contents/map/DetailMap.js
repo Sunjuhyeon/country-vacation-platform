@@ -52,7 +52,7 @@ const cityCoordinates = {
   양구군: { lat: 38.14409763, lng: 127.981198 },
 };
 
-export default function GangwonDetail({data}) {
+export default function DetailMap({data}) {
   const location = useLocation();
   const state = location.state;
   const [isOpen, setIsOpen] = useState(false); //커스텀오버레이 관리

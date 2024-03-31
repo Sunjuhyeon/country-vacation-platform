@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom';
 import Map from '../contents/CityMap'
-import GangwonMap from '../contents/map/GangwonMap';
-import GangwonDetail from '../contents/map/GangwonDetail';
+import AllMap from '../contents/map/AllMap';
+import DetailMap from '../contents/map/DetailMap';
 
 export default function Contents(props) {
   const gangwonData = props.data.filter(
@@ -12,8 +12,8 @@ export default function Contents(props) {
     <div>
       <Routes>
         <Route path="/" element={<Map data={props.data} />} />
-        <Route path="/gangwonMap" element={<GangwonMap data={gangwonData} />} />
-        <Route path="/gangwonDetail/:cityName" element={<GangwonDetail data={gangwonData}/>}/>
+        <Route path="/allMap/:ctprvnNm" element={<AllMap data={props.data} />} />
+        {/* <Route path="/detailMap/:cityName" element={<DetailMap data={gangwonData}/>}/> */}
       </Routes>
     </div>
   );
