@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { InfoBox } from './styled';
-// import styled from 'styled-components';
 import { Map, MapMarker, CustomOverlayMap } from 'react-kakao-maps-sdk';
 import useKakaoLoader from './useKakaoLoader';
 import ImgMap1 from '../../assets/images/ico/map_cate1.png';
@@ -10,21 +9,6 @@ import ImgMap4 from '../../assets/images/ico/map_cate4.png';
 import ImgMap5 from '../../assets/images/ico/map_cate5.png';
 import Button from '../side/Button';
 import { useLocation } from 'react-router-dom';
-import {
-  Gangwon,
-  Gyeonggi,
-  Incheon,
-  Chungbuk,
-  Chungnam,
-  DaejeonSejong,
-  Daegu,
-  Gyeongbuk,
-  Gyeongnam,
-  UlsanBusan,
-  Jeonbuk,
-  Jeonnam,
-  Jeju,
-} from './cityName';
 
 const MemoizeMap = React.memo(AllMap);
 
@@ -47,27 +31,6 @@ const cityCoordinates = {
   경상북도: { lat: 36.46440039, lng: 128.666684 },
   경상남도: { lat: 35.381824, lng: 128.230451 },
 };
-
-const cityLocation = {
-  경기도: Gyeonggi,
-  전라북도: Jeonbuk,
-  전라남도: Jeonnam,
-  인천: Incheon,
-  강원도: Gangwon,
-  제주도: Jeju,
-  대전·세종: DaejeonSejong,
-  대구: Daegu,
-  울산·부산 : UlsanBusan,
-  충청남도 : Chungnam,
-  충청북도 : Chungbuk,
-  경상북도 : Gyeongbuk,
-  경상남도 : Gyeongnam
-};
-const cityNames = {};
-for (const [city, location] of Object.entries(cityLocation)){
-  cityNames[city] = location.map(location => location.name)
-}
-console.log(cityNames)
 
 function AllMap(props) {
   useKakaoLoader();
@@ -163,11 +126,7 @@ function AllMap(props) {
 
   return (
     <div className="map_inner">
-      {
-        location.state && location.state.cityName && (
-          <Button location={cityNames[location.state.cityName]} all={location.state.cityName}/>
-        )
-      }
+      <Button cityName={state.cityName} />
       <div>
         <Map // 지도를 표시할 Container
           id="map"

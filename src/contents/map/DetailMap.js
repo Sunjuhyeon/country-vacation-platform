@@ -8,37 +8,7 @@ import ImgMap3 from '../../assets/images/ico/map_cate3.png';
 import ImgMap4 from '../../assets/images/ico/map_cate4.png';
 import ImgMap5 from '../../assets/images/ico/map_cate5.png';
 import Button from '../side/Button';
-import {
-  Gangwon,
-  Gyeonggi,
-  Incheon,
-  Chungbuk,
-  Chungnam,
-  DaejeonSejong,
-  Daegu,
-  Gyeongbuk,
-  Gyeongnam,
-  UlsanBusan,
-  Jeonbuk,
-  Jeonnam,
-  Jeju,
-} from './cityName';
-
-const cityLocation = {
-  경기도: Gyeonggi,
-  전라북도: Jeonbuk,
-  전라남도: Jeonnam,
-  인천: Incheon,
-  강원도: Gangwon,
-  제주도: Jeju,
-  대전·세종: DaejeonSejong,
-  대구: Daegu,
-  울산·부산: UlsanBusan,
-  충청남도: Chungnam,
-  충청북도: Chungbuk,
-  경상북도: Gyeongbuk,
-  경상남도: Gyeongnam,
-};
+import { Link } from 'react-router-dom';
 
 export default function DetailMap({data}) {
   const location = useLocation();
@@ -47,8 +17,11 @@ export default function DetailMap({data}) {
   const [filteredData, setFilteredData] = useState([]);
   const [filteredCategory, setFilteredCategory] = useState(null); //체험프로그램 구분 관리
   const [filteredCity, setFilteredCity] = useState(null); //시군구명 관리
-  const [mapCenter, setMapCenter] = useState({lat: 37.8304115, lng: 128.2260705}); //중심좌표 관리
-  
+  const [mapCenter, setMapCenter] = useState({
+    lat: state.cityState.lat,
+    lng: state.cityState.lng,
+  }); //중심좌표 관리
+
   const toggleMarker = (index, position) => {
     setIsOpen(prevState => {
       // 새로운 상태 배열 생성
@@ -56,19 +29,19 @@ export default function DetailMap({data}) {
       // 클릭된 마커의 isOpen 상태를 토글
       newState[index] = !prevState[index];
       // 새로운 상태 반환
-      console.log(index, position)
+      console.log(index, position);
       return newState;
     });
     setMapCenter(position);
   };
-  
+
   // 체험프로그램 +로 나누어 첫번째 단어로 구분
   const getCategory = exprnSe => {
     if (!exprnSe) return '농촌체험';
     const categorries = exprnSe.split('+');
     return categorries[0] === '기타' ? '농촌체험' : categorries[0];
   };
-  
+
   // 카테고리 필터링 이미지_이미지 매핑 객체 생성
   const categoryImage = {
     농작물경작체험: ImgMap1,
@@ -77,7 +50,7 @@ export default function DetailMap({data}) {
     건강: ImgMap4,
     농촌체험: ImgMap5,
   };
-  
+
   // 이미지 매핑 함수
   const getCategoryImage = category => {
     return categoryImage[category] || ImgMap5;
@@ -88,19 +61,19 @@ export default function DetailMap({data}) {
       const cityName = state.cityName;
       const filtered = data.filter(item => item.signguNm === cityName);
       setFilteredData(filtered);
-      setIsOpen(new Array(state.cityName.length).fill(false));
-
-      const coordinates = cityCoordinates[state.cityName];
-      if (coordinates) {
-        setMapCenter(coordinates);
-      }
+      setIsOpen(new Array(filtered.length).fill(false));
+      console.log(filtered);
     }
-    console.log(filteredData);
-  }, [location.state]);
+    if(state && state.cityState){
+      setMapCenter({ lat: state.cityState.lat, lng: state.cityState.lng });
+    }
+  }, [state]);
+
+  console.log(state.cityName);
 
   return (
     <div className="map_inner">
-      {/* <Button locaion={cityLocation} /> */}
+      <Button cityName={state.stateName} />
       <div>
         <Map // 지도를 표시할 Container
           id="map"

@@ -72,6 +72,12 @@ export default function Map(props) {
 
   return (
     <div className="inner">
+      <div className="bg_wrap">
+        <i className="bg1"></i>
+        <i className="bg2"></i>
+        <i className="bg3"></i>
+        <i className="bg4"></i>
+      </div>
       <div className="map_wrap">
         <img
           className="map_img"
@@ -81,10 +87,10 @@ export default function Map(props) {
         <div className="state_wrap">
           <ul className="state_list">
             {listState.map((v, i) => {
-              console.log(v)
+              console.log(v);
               return (
                 <li key={i} className={`${v}`}>
-                  <Link to={`/allMap/${v}`} state={{ cityName : v }}>
+                  <Link to={`/allMap/${v}`} state={{ cityName: v }}>
                     <p>{v}</p>
                     <Circle size={countState[v]}>
                       <IcoNm size={countState[v]}>{countState[v]}</IcoNm>

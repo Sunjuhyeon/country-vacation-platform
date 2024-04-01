@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Contents from './layout/Contents';
+import Header from './layout/Header';
+import Footer from './layout/Footer';
 import './assets/css/genaral.css';
 
 export default function App() {
@@ -75,7 +77,9 @@ export default function App() {
 
   return (
     <div>
+      <Header/>
       {data && <Contents data={data} />}
+      <Footer/>
     </div>
   );
 }

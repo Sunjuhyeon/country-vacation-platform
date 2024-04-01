@@ -12,8 +12,14 @@ export default function Contents(props) {
     <div>
       <Routes>
         <Route path="/" element={<Map data={props.data} />} />
-        <Route path="/allMap/:ctprvnNm" element={<AllMap data={props.data} />} />
-        <Route path="/detailMap/:signguNm" element={<DetailMap data={props.data}/>}/>
+        <Route
+          path="/allMap/:ctprvnNm"
+          element={<AllMap data={props.data} />}
+        />
+        <Route
+          path="/detailMap/:signguNm"
+          element={<DetailMap data={props.data} />}
+        />
       </Routes>
     </div>
   );
