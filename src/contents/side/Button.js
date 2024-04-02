@@ -39,8 +39,11 @@ export default function Button({ cityName }) {
 
   return (
     <div className="btn_wrap">
+      <Link to="/" className='home_btn'><i>전국 지도 보기</i></Link>
       <div className="city_btn_wrap">
-        <Link to={`/allMap/${cityName}`} state={{cityName:v}}>전체</Link>
+        <Link to={`/allMap/${cityName}`} state={{ cityName: v }}>
+          지역 전체
+        </Link>
         {selectedCityLocations.map((city, index) => {
           return (
             <Link

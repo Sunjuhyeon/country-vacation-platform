@@ -10,6 +10,7 @@
     "axios": "^1.6.8",
     "bootstrap-icons": "^1.11.3",
     "dotenv": "^16.4.5",
+    "nginx": "^1.0.8",
     "react": "^18.2.0",
     "react-bootstrap-icons": "^1.11.3",
     "react-dom": "^18.2.0",

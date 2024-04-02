@@ -77,7 +77,7 @@ export default function App() {
 
   return (
     <div>
-      <Header/>
+      {/* <Header/> */}
       {data && <Contents data={data} />}
       <Footer/>
     </div>

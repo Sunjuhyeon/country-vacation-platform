@@ -1,21 +1,39 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import Header from '../layout/Header';
 
 // styled-component
 const Circle = styled.div`
   width: ${({ size }) => `${Math.min(Math.max((size / 40) * 20, 40), 80)}px`};
   height: ${({ size }) => `${Math.min(Math.max((size / 40) * 20, 40), 80)}px`};
   border-radius: 50%;
-  background-color: #fff;
-  outline: 4px solid green;
-  display:flex;
-  justify-content:center;
-  align-items:center;
+  background: ${({ size }) =>
+    size <= 100
+      ? `radial-gradient(
+        circle, rgba(179,212,86,1) 0%, 
+        rgba(179,212,86,0.7461059190031153) 9%, 
+        rgba(179,212,86,0.2570093457943925) 100%
+    )`
+      : `radial-gradient(
+        circle,
+        rgba(138, 173, 36, 1) 0%,
+        rgba(138, 173, 36, 0.9783280367231638) 9%,
+        rgba(138, 173, 36, 0.3116613700564972) 100%
+    )`};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @media (max-width: 500px) {
+    width: ${({ size }) => `${Math.min(Math.max((size / 30) * 30, 40), 60)}px`};
+    height: ${({ size }) =>
+      `${Math.min(Math.max((size / 30) * 30, 40), 60)}px`};
+  }
 `;
 const IcoNm = styled.span`
   font-size: ${({ size }) =>
     `${Math.min(Math.max((size / 30) * 5, 20), 32)}px`};
+  color: #fff;
 `;
 
 export default function Map(props) {
@@ -71,35 +89,36 @@ export default function Map(props) {
   }, [props.data]);
 
   return (
-    <div className="inner">
-      <div className="bg_wrap">
-        <i className="bg1"></i>
-        <i className="bg2"></i>
-        <i className="bg3"></i>
-        <i className="bg4"></i>
-      </div>
-      <div className="map_wrap">
-        <img
-          className="map_img"
-          src={require(`../assets/images/img/map1.png`)}
-          alt="지도"
-        />
-        <div className="state_wrap">
-          <ul className="state_list">
-            {listState.map((v, i) => {
-              console.log(v);
-              return (
-                <li key={i} className={`${v}`}>
-                  <Link to={`/allMap/${v}`} state={{ cityName: v }}>
-                    <p>{v}</p>
-                    <Circle size={countState[v]}>
-                      <IcoNm size={countState[v]}>{countState[v]}</IcoNm>
-                    </Circle>
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
+    <div>
+      <Header/>
+      <div className="inner">
+        <div className="map_wrap">
+          <div className="bg_wrap">
+            <i className="cloud1"></i>
+            <i className="cloud2"></i>
+          </div>
+          <img
+            className="map_img"
+            src={require(`../assets/images/img/map1.png`)}
+            alt="지도"
+          />
+          <div className="state_wrap">
+            <ul className="state_list">
+              {listState.map((v, i) => {
+                console.log(v);
+                return (
+                  <li key={i} className={`${v}`}>
+                    <Link to={`/allMap/${v}`} state={{ cityName: v }}>
+                      <p>{v}</p>
+                      <Circle size={countState[v]}>
+                        <IcoNm size={countState[v]}>{countState[v]}</IcoNm>
+                      </Circle>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
         </div>
       </div>
     </div>
