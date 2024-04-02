@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Contents from './layout/Contents';
-import Header from './layout/Header';
 import Footer from './layout/Footer';
 import './assets/css/genaral.css';
 
 export default function App() {
-  const URL =
-    ' http://api.data.go.kr/openapi/tn_pubr_public_frhl_exprn_vilage_api';
+  const URL = 'http://api.data.go.kr/openapi/tn_pubr_public_frhl_exprn_vilage_api';
 
-  const [data, setData] = useState(null); //api로 받은 데이터를 저장할 상태
+  const [data, setData] = useState(null); // API로 받은 데이터를 저장할 상태
 
   const fetchDataByProvince = async province => {
     try {
@@ -25,8 +23,9 @@ export default function App() {
           ctprvnNm: province,
         },
       });
-      console.log('호출데이터 :', response.data.response.body.items);
-      return response.data.response.body.items;
+
+      // API 응답에서 'items'가 없는 경우 빈 배열 반환
+      return response.data?.response?.body?.items || [];
     } catch (error) {
       console.error('에러 : ', error);
       return [];
@@ -35,7 +34,7 @@ export default function App() {
 
   const fetchData = async () => {
     try {
-      const provices = [
+      const provinces = [
         '경기도',
         '전북특별자치도',
         '전라남도',
@@ -58,17 +57,15 @@ export default function App() {
       if (storedData) {
         setData(JSON.parse(storedData));
       } else {
-        const dataByProvice = await Promise.all(
-          provices.map(fetchDataByProvince)
-        );
-        const flattenedData = dataByProvice.flat();
+        const dataByProvince = await Promise.all(provinces.map(fetchDataByProvince));
+        const flattenedData = dataByProvince.flat();
         setData(flattenedData);
 
         sessionStorage.setItem('cacheData', JSON.stringify(flattenedData));
       }
     } catch (error) {
       console.error('에러발생', error);
-    }  
+    }
   };
 
   useEffect(() => {
@@ -77,10 +74,7 @@ export default function App() {
 
   return (
     <div>
-      {/* <Header/> */}
       {data && <Contents data={data} />}
-      <Footer/>
     </div>
   );
 }
-

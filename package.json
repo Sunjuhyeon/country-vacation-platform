@@ -44,5 +44,6 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://api.data.go.kr/"
+  "proxy": "http://localhost:8002/",
+  "homepage": "."
 }

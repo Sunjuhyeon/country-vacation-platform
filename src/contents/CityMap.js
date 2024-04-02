@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Header from '../layout/Header';
+import Footer from '../layout/Footer';
 
 // styled-component
 const Circle = styled.div`
@@ -121,6 +122,7 @@ export default function Map(props) {
           </div>
         </div>
       </div>
+      <Footer/>
     </div>
   );
 }
