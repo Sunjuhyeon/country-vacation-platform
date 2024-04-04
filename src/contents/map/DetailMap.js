@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Map, MapMarker, CustomOverlayMap } from 'react-kakao-maps-sdk';
-import { InfoBox } from './styled';
+import useBreakpoint from './useBreakpoint';
+import { InfoBox, MoblieInfoBox } from './styled';
 import ImgMap1 from '../../assets/images/ico/map_cate1.png';
 import ImgMap2 from '../../assets/images/ico/map_cate2.png';
 import ImgMap3 from '../../assets/images/ico/map_cate3.png';
@@ -21,6 +22,8 @@ export default function DetailMap({data}) {
     lat: state.cityState.lat,
     lng: state.cityState.lng,
   }); //중심좌표 관리
+  const { isMobile, isDesktop } = useBreakpoint(); //breakpoint
+
 
   const toggleMarker = (index, position) => {
     setIsOpen(prevState => {
@@ -120,7 +123,7 @@ export default function DetailMap({data}) {
                     category={category}
                     city={city}
                   ></MapMarker>
-                  {isOpen[index] && (
+                  {isDesktop && isOpen[index] && (
                     <CustomOverlayMap
                       position={{ lat: lat, lng: lng }}
                       yAnchor={1.15} // 마커와의 간격을 조정할 수 있다
@@ -193,6 +196,74 @@ export default function DetailMap({data}) {
               );
             })}
           </Map>
+          <div className="moblie_info">
+            {filteredData.map((position, index) => {
+              const lat =
+                position && position.latitude ? position.latitude : null;
+              const lng =
+                position && position.longitude ? position.longitude : null;
+              const category = getCategory(position.exprnSe);
+              const city =
+                position && position.signguNm ? position.signguNm : null;
+              if (
+                (filteredCategory && category !== filteredCategory) ||
+                (filteredCity && city !== filteredCity)
+              ) {
+                return null;
+              }
+              return (
+                <div>
+                  {isMobile && isOpen[index] && (
+                    <MoblieInfoBox>
+                      <div className="info_overlay">
+                        <div className="info_list">
+                          <p className={`info_cate ${category}`}>{category}</p>
+                          <p className="info_title">{position.exprnVilageNm}</p>
+                          <ul className="info_act">
+                            {position.exprnCn
+                              .split('+')
+                              .slice(0, 3)
+                              .map((item, idx) => {
+                                return <li className={`act${idx}`}>{item}</li>;
+                              })}
+                          </ul>
+                          <ul className="info_contact">
+                            {position.rdnmadr && (
+                              <li className="contact1">
+                                <p>{position.rdnmadr}</p>
+                              </li>
+                            )}
+                            {position.phoneNumber && (
+                              <li className="contact2">
+                                <p>{position.phoneNumber}</p>
+                              </li>
+                            )}
+                            {position.homepageUrl && (
+                              <li className="contact3">
+                                <a href={position.homepageUrl} target="_blank">
+                                  {position.homepageUrl}
+                                </a>
+                              </li>
+                            )}
+                          </ul>
+                        </div>
+                        <div className="map_link">
+                          <span>길찾기</span>
+                          <a
+                            href={`https://map.kakao.com/link/to/${position.exprnVilageNm},${lat},${lng}`}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            길찾기
+                          </a>
+                        </div>
+                      </div>
+                    </MoblieInfoBox>
+                  )}
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>

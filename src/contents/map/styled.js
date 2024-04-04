@@ -26,3 +26,15 @@ export const InfoBox = styled.div`
     background-color: #fff;
   }
 `;
+
+export const MoblieInfoBox = styled.div`
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 32px);
+  border-radius: 10px;
+  border: 2px solid #c4d7b2;
+  background-color: #fff;
+  z-index: 10;
+`;

@@ -651,4 +651,28 @@ header .hd_wrap .sub_title {
     top: 131px;
     left: 51px;
   }
+  .info_overlay .info_list {
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+  }
+  .info_overlay .info_list .info_cate {
+    order: 2;
+  }
+  .info_overlay .info_list .info_title {
+    order: 1;
+    margin-top: 0;
+  }
+  .info_overlay .info_list .info_act {
+    order: 3;
+    margin-top: 0;
+    width: 100%;
+  }
+  .info_overlay .info_list .info_contact {
+    order: 4;
+    margin-top: 0;
+  }
 }/*# sourceMappingURL=main.css.map */
