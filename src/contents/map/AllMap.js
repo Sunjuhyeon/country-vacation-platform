@@ -10,6 +10,8 @@ import ImgMap4 from '../../assets/images/ico/map_cate4.png';
 import ImgMap5 from '../../assets/images/ico/map_cate5.png';
 import Button from '../side/Button';
 import { useLocation, Link } from 'react-router-dom';
+import { setFilteredData } from '../../action/mapAction';
+import {useDispatch, useSelector} from 'react-redux';
 
 const MemoizeMap = React.memo(AllMap);
 
@@ -37,6 +39,8 @@ function AllMap(props) {
   useKakaoLoader();
   const location = useLocation();
   const state = location.state;
+  const dispatch = useDispatch();
+
   const [filteredData, setFilteredData] = useState([]);
   const [isOpen, setIsOpen] = useState(false); //커스텀오버레이 관리
   const [filteredCategory, setFilteredCategory] = useState(null); //체험프로그램 구분 관리

@@ -1,0 +1,8 @@
+//api 호출
+export const FETCH_DATA_REQUEST = 'FETCH_DATA_REQUEST';
+export const FETCH_DATA_SUCCESS = 'FETCH_DATA_SUCCESS';
+export const FETCH_DATA_FAILURE = 'FETCH_DATA_FAILURE';
+
+//맵 관리
+export const SET_FILTERED_DATA = 'SET_FILTERED_DATA';
+export const SET_IS_OPEN = 'SET_IS_OPEN';

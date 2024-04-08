@@ -85,8 +85,6 @@ export default function Map(props) {
 
     setCountState(stateCounts);
     setListState(stateList);
-
-    console.log(props.data);
   }, [props.data]);
 
   return (
