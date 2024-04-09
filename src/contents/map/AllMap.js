@@ -9,15 +9,9 @@ import ImgMap3 from '../../assets/images/ico/map_cate3.png';
 import ImgMap4 from '../../assets/images/ico/map_cate4.png';
 import ImgMap5 from '../../assets/images/ico/map_cate5.png';
 import Button from '../side/Button';
-import { useLocation, Link } from 'react-router-dom';
-import { setFilteredData } from '../../action/mapAction';
-import {useDispatch, useSelector} from 'react-redux';
-
-const MemoizeMap = React.memo(AllMap);
-
-export default function MemoizeMapComponent(props) {
-  return <MemoizeMap {...props} />;
-}
+import { useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleMarkerIsOpen, setMapCenter } from '../../reducer/mapReducer';
 
 const cityCoordinates = {
   경기도: { lat: 37.519329, lng: 127.008509 },
@@ -35,46 +29,41 @@ const cityCoordinates = {
   경상남도: { lat: 35.381824, lng: 128.230451 },
 };
 
-function AllMap(props) {
+export default function AllMap(props) {
   useKakaoLoader();
   const location = useLocation();
   const state = location.state;
   const dispatch = useDispatch();
 
   const [filteredData, setFilteredData] = useState([]);
-  const [isOpen, setIsOpen] = useState(false); //커스텀오버레이 관리
-  const [filteredCategory, setFilteredCategory] = useState(null); //체험프로그램 구분 관리
-  const [filteredCity, setFilteredCity] = useState(null); //시군구명 관리
-  const [mapCenter, setMapCenter] = useState({
-    lat: 37.8304115,
-    lng: 128.2260705,
-  }); //중심좌표 관리
-  const {isMobile, isDesktop} = useBreakpoint(); //breakpoint
+  const isOpenArray = useSelector(state => state.map.isOpenArray); // 커스텀 오버레이 관리
+  const isCenter = useSelector(state => state.map.position); //지도 center 관리
+  const { isMobile, isDesktop } = useBreakpoint(); //breakpoint
 
   // 데이터에서 지역명 변경
   const modifiedData = props.data.map(v => {
-    if (v.ctprvnNm == '전북특별자치도') {
+    if (v.ctprvnNm === '전북특별자치도') {
       return { ...v, ctprvnNm: '전라북도' };
     }
-    if (v.ctprvnNm == '광주광역시') {
+    if (v.ctprvnNm === '광주광역시') {
       return { ...v, ctprvnNm: '전라남도' };
     }
-    if (v.ctprvnNm == '인천광역시') {
+    if (v.ctprvnNm === '인천광역시') {
       return { ...v, ctprvnNm: '인천' };
     }
-    if (v.ctprvnNm == '대구광역시') {
+    if (v.ctprvnNm === '대구광역시') {
       return { ...v, ctprvnNm: '대구' };
     }
-    if (v.ctprvnNm == '강원특별자치도') {
+    if (v.ctprvnNm === '강원특별자치도') {
       return { ...v, ctprvnNm: '강원도' };
     }
-    if (v.ctprvnNm == '제주특별자치도') {
+    if (v.ctprvnNm === '제주특별자치도') {
       return { ...v, ctprvnNm: '제주도' };
     }
-    if (v.ctprvnNm == '대전광역시' || v.ctprvnNm == '세종특별자치시') {
+    if (v.ctprvnNm === '대전광역시' || v.ctprvnNm === '세종특별자치시') {
       return { ...v, ctprvnNm: '대전·세종' };
     }
-    if (v.ctprvnNm == '울산광역시' || v.ctprvnNm == '부산광역시') {
+    if (v.ctprvnNm === '울산광역시' || v.ctprvnNm === '부산광역시') {
       return { ...v, ctprvnNm: '울산·부산' };
     }
 
@@ -82,16 +71,9 @@ function AllMap(props) {
   });
 
   const toggleMarker = (index, position) => {
-    setIsOpen(prevState => {
-      // 새로운 상태 배열 생성
-      const newState = new Array(prevState.length).fill(false);
-      // 클릭된 마커의 isOpen 상태를 토글
-      newState[index] = !prevState[index];
-      // 새로운 상태 반환
-      console.log(index, position);
-      return newState;
-    });
-    setMapCenter(position);
+    const isOpen = !isOpenArray[index];
+    dispatch(toggleMarkerIsOpen({ index, isOpen }));
+    dispatch(setMapCenter(position));
   };
 
   useEffect(() => {
@@ -99,12 +81,13 @@ function AllMap(props) {
       const cityName = state.cityName;
       const filtered = modifiedData.filter(item => item.ctprvnNm === cityName);
       setFilteredData(filtered);
-      setIsOpen(new Array(state.cityName.length).fill(false));
+
+      dispatch(toggleMarkerIsOpen({ index: 0, isOpen: false }));
       console.log(cityName);
 
       const coordinates = cityCoordinates[state.cityName];
       if (coordinates) {
-        setMapCenter(coordinates);
+        dispatch(setMapCenter(coordinates));
       }
     }
   }, [location.state]);
@@ -137,7 +120,7 @@ function AllMap(props) {
         <div>
           <Map // 지도를 표시할 Container
             id="map"
-            center={mapCenter}
+            center={isCenter}
             isPanto={true}
             style={{
               // 지도의 크기
@@ -154,13 +137,6 @@ function AllMap(props) {
               const category = getCategory(position.exprnSe);
               const city =
                 position && position.signguNm ? position.signguNm : null;
-              //카테고리 필터링
-              if (
-                (filteredCategory && category !== filteredCategory) ||
-                (filteredCity && city !== filteredCity)
-              ) {
-                return null;
-              }
               return (
                 <div>
                   <MapMarker
@@ -178,7 +154,7 @@ function AllMap(props) {
                     category={category}
                     city={city}
                   ></MapMarker>
-                  {isDesktop && isOpen[index] && (
+                  {isDesktop && isOpenArray[index] && (
                     <CustomOverlayMap
                       position={{ lat: lat, lng: lng }}
                       yAnchor={1.15} // 마커와의 간격을 조정할 수 있다
@@ -245,13 +221,12 @@ function AllMap(props) {
                         </button>
                       </InfoBox>
                     </CustomOverlayMap>
-                    )
-                  }
+                  )}
                 </div>
               );
             })}
           </Map>
-          <div className='moblie_info'>
+          <div className="moblie_info">
             {filteredData.map((position, index) => {
               const lat =
                 position && position.latitude ? position.latitude : null;
@@ -260,15 +235,9 @@ function AllMap(props) {
               const category = getCategory(position.exprnSe);
               const city =
                 position && position.signguNm ? position.signguNm : null;
-              if (
-                (filteredCategory && category !== filteredCategory) ||
-                (filteredCity && city !== filteredCity)
-              ) {
-                return null;
-              }
               return (
                 <div>
-                  {isMobile && isOpen[index] && (
+                  {isMobile && isOpenArray[index] && (
                     <MoblieInfoBox>
                       <div className="info_overlay">
                         <div className="info_list">

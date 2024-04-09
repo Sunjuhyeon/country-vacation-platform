@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Contents from './layout/Contents';
-import Footer from './layout/Footer';
 import './assets/css/genaral.css';
 
 export default function App() {

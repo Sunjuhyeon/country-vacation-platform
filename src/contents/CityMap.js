@@ -43,28 +43,28 @@ export default function Map(props) {
 
   // 데이터에서 지역명 변경
   const modifiedData = props.data.map(v => {
-    if (v.ctprvnNm == '전북특별자치도') {
+    if (v.ctprvnNm === '전북특별자치도') {
       return { ...v, ctprvnNm: '전라북도' };
     }
-    if (v.ctprvnNm == '광주광역시') {
+    if (v.ctprvnNm === '광주광역시') {
       return { ...v, ctprvnNm: '전라남도' };
     }
-    if (v.ctprvnNm == '인천광역시') {
+    if (v.ctprvnNm === '인천광역시') {
       return { ...v, ctprvnNm: '인천' };
     }
-    if (v.ctprvnNm == '대구광역시') {
+    if (v.ctprvnNm === '대구광역시') {
       return { ...v, ctprvnNm: '대구' };
     }
-    if (v.ctprvnNm == '강원특별자치도') {
+    if (v.ctprvnNm === '강원특별자치도') {
       return { ...v, ctprvnNm: '강원도' };
     }
-    if (v.ctprvnNm == '제주특별자치도') {
+    if (v.ctprvnNm === '제주특별자치도') {
       return { ...v, ctprvnNm: '제주도' };
     }
-    if (v.ctprvnNm == '대전광역시' || v.ctprvnNm == '세종특별자치시') {
+    if (v.ctprvnNm === '대전광역시' || v.ctprvnNm === '세종특별자치시') {
       return { ...v, ctprvnNm: '대전·세종' };
     }
-    if (v.ctprvnNm == '울산광역시' || v.ctprvnNm == '부산광역시') {
+    if (v.ctprvnNm === '울산광역시' || v.ctprvnNm === '부산광역시') {
       return { ...v, ctprvnNm: '울산·부산' };
     }
 

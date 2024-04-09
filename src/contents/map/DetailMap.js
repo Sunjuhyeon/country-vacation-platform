@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Map, MapMarker, CustomOverlayMap } from 'react-kakao-maps-sdk';
+import useKakaoLoader from './useKakaoLoader';
 import useBreakpoint from './useBreakpoint';
 import { InfoBox, MoblieInfoBox } from './styled';
 import ImgMap1 from '../../assets/images/ico/map_cate1.png';
@@ -9,33 +10,28 @@ import ImgMap3 from '../../assets/images/ico/map_cate3.png';
 import ImgMap4 from '../../assets/images/ico/map_cate4.png';
 import ImgMap5 from '../../assets/images/ico/map_cate5.png';
 import Button from '../side/Button';
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleMarkerIsOpen, setMapCenter } from '../../reducer/mapReducer';
 
 export default function DetailMap({data}) {
+  useKakaoLoader();
   const location = useLocation();
   const state = location.state;
-  const [isOpen, setIsOpen] = useState(false); //커스텀오버레이 관리
-  const [filteredData, setFilteredData] = useState([]);
-  const [filteredCategory, setFilteredCategory] = useState(null); //체험프로그램 구분 관리
-  const [filteredCity, setFilteredCity] = useState(null); //시군구명 관리
-  const [mapCenter, setMapCenter] = useState({
-    lat: state.cityState.lat,
-    lng: state.cityState.lng,
-  }); //중심좌표 관리
-  const { isMobile, isDesktop } = useBreakpoint(); //breakpoint
+  const dispatch = useDispatch();
 
+  const [filteredData, setFilteredData] = useState([]);
+  const isOpenArray = useSelector(state => state.map.isOpenArray); // 커스텀 오버레이 관리
+  const isCenter = useSelector(state => state.map.position); //지도 center 관리
+  const { isMobile, isDesktop } = useBreakpoint(); //breakpoint
+  // const [mapCenter, setMapCenter] = useState({
+  //   lat: state.cityState.lat,
+  //   lng: state.cityState.lng,
+  // }); //중심좌표 관리
 
   const toggleMarker = (index, position) => {
-    setIsOpen(prevState => {
-      // 새로운 상태 배열 생성
-      const newState = new Array(prevState.length).fill(false);
-      // 클릭된 마커의 isOpen 상태를 토글
-      newState[index] = !prevState[index];
-      // 새로운 상태 반환
-      console.log(index, position);
-      return newState;
-    });
-    setMapCenter(position);
+    const isOpen = !isOpenArray[index];
+    dispatch(toggleMarkerIsOpen({ index, isOpen }));
+    dispatch(setMapCenter(position));
   };
 
   // 체험프로그램 +로 나누어 첫번째 단어로 구분
@@ -64,11 +60,14 @@ export default function DetailMap({data}) {
       const cityName = state.cityName;
       const filtered = data.filter(item => item.signguNm === cityName);
       setFilteredData(filtered);
-      setIsOpen(new Array(filtered.length).fill(false));
+      dispatch(toggleMarkerIsOpen({ index: 0, isOpen: false }));
+
       console.log(filtered);
     }
-    if(state && state.cityState){
-      setMapCenter({ lat: state.cityState.lat, lng: state.cityState.lng });
+    if (state && state.cityState) {
+      dispatch(
+        setMapCenter({ lat: state.cityState.lat, lng: state.cityState.lng })
+      );
     }
   }, [state]);
 
@@ -81,7 +80,7 @@ export default function DetailMap({data}) {
         <div>
           <Map // 지도를 표시할 Container
             id="map"
-            center={mapCenter}
+            center={isCenter}
             isPanto={true}
             style={{
               // 지도의 크기
@@ -98,13 +97,6 @@ export default function DetailMap({data}) {
               const category = getCategory(position.exprnSe);
               const city =
                 position && position.signguNm ? position.signguNm : null;
-              //카테고리 필터링
-              if (
-                (filteredCategory && category !== filteredCategory) ||
-                (filteredCity && city !== filteredCity)
-              ) {
-                return null;
-              }
               return (
                 <div>
                   <MapMarker
@@ -123,7 +115,7 @@ export default function DetailMap({data}) {
                     category={category}
                     city={city}
                   ></MapMarker>
-                  {isDesktop && isOpen[index] && (
+                  {isDesktop && isOpenArray[index] && (
                     <CustomOverlayMap
                       position={{ lat: lat, lng: lng }}
                       yAnchor={1.15} // 마커와의 간격을 조정할 수 있다
@@ -205,15 +197,9 @@ export default function DetailMap({data}) {
               const category = getCategory(position.exprnSe);
               const city =
                 position && position.signguNm ? position.signguNm : null;
-              if (
-                (filteredCategory && category !== filteredCategory) ||
-                (filteredCity && city !== filteredCity)
-              ) {
-                return null;
-              }
               return (
                 <div>
-                  {isMobile && isOpen[index] && (
+                  {isMobile && isOpenArray[index] && (
                     <MoblieInfoBox>
                       <div className="info_overlay">
                         <div className="info_list">

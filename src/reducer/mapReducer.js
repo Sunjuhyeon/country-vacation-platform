@@ -1,25 +1,27 @@
-import { SET_FILTERED_DATA, SET_IS_OPEN } from "../action/actionTypes";
+import {createSlice} from '@reduxjs/toolkit';
 
 const initialState = {
-  filteredData : [],
-  isOpen: {},
+  isOpenArray: [],
+  position: [{ lat: 37.8304115 }, { lng: 128.2260705 }],
 };
 
-const mapReducer = (state = initialState, action) => {
-  switch (action.type){
-    case SET_FILTERED_DATA:
-      return{
-        ...state,
-        filteredData: action.payload
-      };
-    case SET_IS_OPEN:
-      return{
-        ...state,
-        isOpen: {...state.isOpen, [action.payload.index]: action.payload.isOpen},
-      };
-    default:
-      return state;
-  }
-}
+const mapSlice = createSlice({
+  name: "map",
+  initialState ,
+  reducers:{
+    toggleMarkerIsOpen(state, action){
+      const {index, isOpen} = action.payload;
+      const newIsOpenArray = new Array(state.isOpenArray.length).fill(false);
+      newIsOpenArray[index] = isOpen; // 해당 인덱스의 isOpen 상태를 업데이트
+      state.isOpenArray = newIsOpenArray;
+    },
 
-export default mapReducer;
+    setMapCenter(state, action){
+      const{lat, lng} = action.payload;
+      state.position = {lat, lng}
+    },
+  }
+});
+
+export const { toggleMarkerIsOpen, setMapCenter, setFilteredCategory, setFilteredCity } = mapSlice.actions;
+export default mapSlice.reducer;
