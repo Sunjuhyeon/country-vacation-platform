@@ -23,6 +23,14 @@ button{
   font-family: $nunito;
 }
 
+.hide_txt{
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: hidden;
+  clip-path: polygon(0 0, 0 0, 0 0);
+}
+
 .btn{
   font-size: 17px;
   line-height: 22px;

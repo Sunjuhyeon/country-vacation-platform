@@ -11,7 +11,9 @@ export default function Footer() {
               target="_blank"
               rel="noreferrer"
               href="https://github.com/Sunjuhyeon/country-vacation-platform/tree/main"
-            ><i></i></a>
+            >
+              <i className="hide_txt">깃허브 링크</i>
+            </a>
           </li>
           <li>
             <p>E-mail : dong2dong32@gmail.com</p>

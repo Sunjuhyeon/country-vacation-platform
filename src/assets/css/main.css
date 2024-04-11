@@ -1,4 +1,20 @@
 @charset "UTF-8";
+.loading {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #01abc1;
+}
+.loading i {
+  display: inline-block;
+  width: 250px;
+  height: 250px;
+  background: url(../images/img/loading.gif) no-repeat center;
+  background-size: contain;
+}
+
 header .hd_wrap {
   position: relative;
   z-index: 10;
