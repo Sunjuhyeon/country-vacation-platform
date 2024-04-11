@@ -13,6 +13,8 @@ import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleMarkerIsOpen, setMapCenter } from '../../reducer/mapReducer';
 
+const { kakao } = window;
+
 const cityCoordinates = {
   경기도: { lat: 37.519329, lng: 127.008509 },
   전라북도: { lat: 35.69513127, lng: 127.0997817 },
@@ -35,9 +37,12 @@ export default function AllMap(props) {
   const state = location.state;
   const dispatch = useDispatch();
 
-  const [filteredData, setFilteredData] = useState([]);
+  // const [filteredData, setFilteredData] = useState([]);
   const isOpenArray = useSelector(state => state.map.isOpenArray); // 커스텀 오버레이 관리
   const isCenter = useSelector(state => state.map.position); //지도 center 관리
+  // const [map, setMap] = useState();
+  // const [markers, setMarkers] = useState([]);
+  const [searchKeyword, setSearchKeyword] = useState('');
   const { isMobile, isDesktop } = useBreakpoint(); //breakpoint
 
   // 데이터에서 지역명 변경
@@ -70,19 +75,42 @@ export default function AllMap(props) {
     return v;
   });
 
-  const toggleMarker = (index, position) => {
-    const isOpen = !isOpenArray[index];
-    dispatch(toggleMarkerIsOpen({ index, isOpen }));
-    dispatch(setMapCenter(position));
-  };
+  // useEffect(() => {
+  //   if(!map) return
+  //   const ps = new kakao.maps.services.Places();
+
+  //   ps.keywordSearch("속초 체험마을", (data, status, _pagination) => {
+  //     if(status === kakao.maps.services.Status.OK){
+  //       //검색된 장소 위치를 기준으로 지도 범위를 재설정 하기 위해
+  //       //LatLngBounds 객체에 좌표를 추가합니다.
+  //       const bounds = new kakao.maps.LatLngBounds();
+  //       let markers = [];
+
+  //       for(var i = 0; i < data.length; i++){
+  //         markers.push({
+  //           position:{
+  //             lat: data[i].y,
+  //             lng: data[i].x,
+  //           },
+  //           content: data[i].place_name,
+  //         })
+  //         bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x))
+  //       };
+  //       setMarkers(markers);
+
+  //       //검색된 장소 위치를 기준으로 지도 범위 재설정
+  //       map.setBounds(bounds);
+  //     }
+  //   })
+  // }, [map])
 
   useEffect(() => {
     if (state && state.cityName) {
       const cityName = state.cityName;
-      const filtered = modifiedData.filter(item => item.ctprvnNm === cityName);
-      setFilteredData(filtered);
+      // const filtered = modifiedData.filter(item => item.ctprvnNm === cityName);
+      // setFilteredData(filtered);
 
-      dispatch(toggleMarkerIsOpen({ index: 0, isOpen: false }));
+      // dispatch(toggleMarkerIsOpen({ index: 0, isOpen: false }));
       console.log(cityName);
 
       const coordinates = cityCoordinates[state.cityName];
@@ -91,6 +119,12 @@ export default function AllMap(props) {
       }
     }
   }, [location.state]);
+
+  const toggleMarker = (index, position) => {
+    const isOpen = !isOpenArray[index];
+    dispatch(toggleMarkerIsOpen({ index, isOpen }));
+    dispatch(setMapCenter(position));
+  };
 
   // 체험프로그램 +로 나누어 첫번째 단어로 구분
   const getCategory = exprnSe => {
@@ -113,10 +147,35 @@ export default function AllMap(props) {
     return categoryImage[category] || ImgMap5;
   };
 
+  const filteredByCity = modifiedData.filter(item => item.ctprvnNm === state.cityName)
+  const filteredData = filteredByCity.filter(item => {
+    //검색어를 공백을 기준으로 분리하여 검색 조건을 생성
+    const searchTerms = searchKeyword.toLowerCase().split(' ');
+
+    // 각 검색어에 대해 장소의 이름, 주소, 체험프로그램, 카테고리 등에서 검색 수행
+    return searchTerms.every(term => {
+      if(item.exprnVilageNm.toLowerCase().includes(term) || item.rdnmadr.toLowerCase().includes(term) || item.exprnCn.toLowerCase().includes(term)){
+        return true;
+      }
+      return false;
+    })
+  });
+
+
   return (
     <div>
       <div className="map_inner">
         <Button cityName={state.cityName} />
+        <div className="search">
+          {/* 검색 입력 필드 */}
+          <input
+            type="text"
+            value={searchKeyword}
+            onChange={e => setSearchKeyword(e.target.value)}
+            placeholder="검색어를 입력하세요"
+            style={{position:'absolute', zIndex:'100', top:'100px'}}
+          />
+        </div>
         <div>
           <Map // 지도를 표시할 Container
             id="map"
@@ -128,6 +187,7 @@ export default function AllMap(props) {
               height: '100vh',
             }}
             level={11} // 지도의 확대 레벨
+            // onCreate={setMap}
           >
             {filteredData.map((position, index) => {
               const lat =
