@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { InfoBox, MoblieInfoBox } from './styled';
+import {
+  InfoBox,
+  MoblieInfoBox,
+  InfoList,
+  InfoListBox,
+  SearchBox,
+} from './styled';
 import { Map, MapMarker, CustomOverlayMap } from 'react-kakao-maps-sdk';
 import useKakaoLoader from './useKakaoLoader';
 import useBreakpoint from './useBreakpoint';
@@ -37,13 +43,11 @@ export default function AllMap(props) {
   const state = location.state;
   const dispatch = useDispatch();
 
-  // const [filteredData, setFilteredData] = useState([]);
   const isOpenArray = useSelector(state => state.map.isOpenArray); // 커스텀 오버레이 관리
   const isCenter = useSelector(state => state.map.position); //지도 center 관리
-  // const [map, setMap] = useState();
-  // const [markers, setMarkers] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState('');
   const { isMobile, isDesktop } = useBreakpoint(); //breakpoint
+  // const [filteredData, setFilteredData] = useState([]);
 
   // 데이터에서 지역명 변경
   const modifiedData = props.data.map(v => {
@@ -74,35 +78,6 @@ export default function AllMap(props) {
 
     return v;
   });
-
-  // useEffect(() => {
-  //   if(!map) return
-  //   const ps = new kakao.maps.services.Places();
-
-  //   ps.keywordSearch("속초 체험마을", (data, status, _pagination) => {
-  //     if(status === kakao.maps.services.Status.OK){
-  //       //검색된 장소 위치를 기준으로 지도 범위를 재설정 하기 위해
-  //       //LatLngBounds 객체에 좌표를 추가합니다.
-  //       const bounds = new kakao.maps.LatLngBounds();
-  //       let markers = [];
-
-  //       for(var i = 0; i < data.length; i++){
-  //         markers.push({
-  //           position:{
-  //             lat: data[i].y,
-  //             lng: data[i].x,
-  //           },
-  //           content: data[i].place_name,
-  //         })
-  //         bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x))
-  //       };
-  //       setMarkers(markers);
-
-  //       //검색된 장소 위치를 기준으로 지도 범위 재설정
-  //       map.setBounds(bounds);
-  //     }
-  //   })
-  // }, [map])
 
   useEffect(() => {
     if (state && state.cityName) {
@@ -166,16 +141,15 @@ export default function AllMap(props) {
     <div>
       <div className="map_inner">
         <Button cityName={state.cityName} />
-        <div className="search">
+        <SearchBox>
           {/* 검색 입력 필드 */}
           <input
             type="text"
             value={searchKeyword}
             onChange={e => setSearchKeyword(e.target.value)}
             placeholder="검색어를 입력하세요"
-            style={{position:'absolute', zIndex:'100', top:'100px'}}
           />
-        </div>
+        </SearchBox>
         <div>
           <Map // 지도를 표시할 Container
             id="map"
@@ -187,7 +161,6 @@ export default function AllMap(props) {
               height: '100vh',
             }}
             level={11} // 지도의 확대 레벨
-            // onCreate={setMap}
           >
             {filteredData.map((position, index) => {
               const lat =
@@ -348,6 +321,22 @@ export default function AllMap(props) {
               );
             })}
           </div>
+          {/* <InfoList>
+            {filteredData.map((position, i) => {
+              const lat =
+                position && position.latitude ? position.latitude : null;
+              const lng =
+                position && position.longitude ? position.longitude : null;
+              const category = getCategory(position.exprnSe);
+              const city =
+                position && position.signguNm ? position.signguNm : null;
+              return (
+                <InfoListBox>
+                  <p className="info_title">{position.exprnVilageNm}</p>
+                </InfoListBox>
+              );
+            })}
+          </InfoList> */}
         </div>
       </div>
     </div>

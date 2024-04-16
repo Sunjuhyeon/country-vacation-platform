@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Gangwon,
@@ -15,8 +15,10 @@ import {
   Jeonnam,
   Jeju,
 } from '../map/cityName';
+import {CircleBtn} from '../map/styled'
 
 export default function Button({ cityName }) {
+  const [isCityBtnVisible, setIsCityBtnisible] = useState(false);
 
   const cityLocation = {
     경기도: Gyeonggi,
@@ -37,29 +39,54 @@ export default function Button({ cityName }) {
 
   const v = cityName;
 
+  const toggleCityBtnVisibility = () => {
+    setIsCityBtnisible(!isCityBtnVisible);
+  }
+
   return (
-    <div className="btn_wrap">
-      <Link to="/" className='home_btn'><i>전국 지도 보기</i></Link>
-      <div className="city_btn_wrap">
-        <Link to={`/allMap/${cityName}`} state={{ cityName: v }}>
-          지역 전체
+    <div className={`btn_wrap ${isCityBtnVisible ? 'show' : ''}`}>
+      {/* <Link to='/test'>테스트</Link> */}
+      <CircleBtn>
+        <Link to="/" className="home_btn">
+          <i>전국 지도 보기</i>
         </Link>
-        {selectedCityLocations.map((city, index) => {
-          return (
-            <Link
-              to={`/detailMap/${city.name}`}
-              state={{
-                cityName: city.name,
-                cityState: city.location,
-                stateName: cityName,
-              }}
-              key={index}
-            >
-              {city.name}
+      </CircleBtn>
+      <CircleBtn>
+        <button
+          type="button"
+          className={`ground_btn ${isCityBtnVisible ? 'on' : ''}`}
+          onClick={toggleCityBtnVisibility}
+        >
+          <i>지역별</i>
+        </button>
+      </CircleBtn>
+      {isCityBtnVisible && (
+        <ul className={`city_btn_wrap`}>
+          <li>
+            <Link to={`/allMap/${cityName}`} state={{ cityName: v }}>
+              지역 전체
             </Link>
-          );
-        })}
-      </div>
+          </li>
+          {selectedCityLocations.map((city, index) => {
+            return (
+              <li>
+                <Link
+                  to={`/detailMap/${city.name}`}
+                  state={{
+                    cityName: city.name,
+                    cityState: city.location,
+                    stateName: cityName,
+                  }}
+                  key={index}
+                  className={`list-item ${isCityBtnVisible ? 'show' : ''}`}
+                >
+                  {city.name}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      )}
     </div>
   );
 }

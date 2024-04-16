@@ -276,19 +276,21 @@ header{
 .btn_wrap{
   position: absolute;
   top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 100;
-  padding: 20px;
+  right: 0;
+  z-index: 10;
+  padding: 70px 10px 10px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: end;
   gap: 10px;
+  max-height: 80%;
   .city_btn_wrap{
     display: flex;
-    gap: 10px;
-    align-items: center;
+    flex-direction: column;
+    gap: 7px;
+    align-items: end;
     width: 100%;
-    overflow-x: auto;
+    overflow-y: auto;
     -ms-overflow-style: none;
     /* 인터넷 익스플로러 */
     scrollbar-width: none;
@@ -296,7 +298,7 @@ header{
     &::-webkit-scrollbar {
       display: none;
     }
-    >a{
+    li{
       background-color: #fff;
       padding: 8px 20px;
       font-size: 15px;
@@ -312,10 +314,6 @@ header{
     }
   }
   .home_btn{
-    padding: 10px;
-    background-color: #fff;
-    border-radius: 50%;
-    box-shadow: rgb(170 172 176) 0px 0px 5px;
     i{
       display: inline-block;
       width: 30px;
@@ -324,6 +322,38 @@ header{
       background-size: contain;
       font-size: 0;
       vertical-align: middle;
+    }
+  }
+  .ground_btn{
+    position: relative;
+    i{
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      background: url(../../assets/images/ico/map_pin.svg) no-repeat center;
+      background-size: contain;
+      font-size: 0;
+      vertical-align: middle;
+    }
+    &:after {
+      content: "지역별";
+      position: absolute;
+      transform: translateX(-50%);
+      left: 50%;
+      bottom: -27px;
+      font-size: 12px;
+      font-style: normal;
+      white-space: nowrap;
+      color: #444;
+    }
+    &.on{
+      i{
+        background: url(../images/ico/list_close.svg) no-repeat center;
+        background-size: contain;
+      }
+      &::after{
+        content: none;
+      }
     }
   }
 }

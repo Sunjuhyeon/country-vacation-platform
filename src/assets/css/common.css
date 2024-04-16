@@ -39,7 +39,7 @@ button {
 }
 .btn.color_1 {
   color: #fff;
-  background-color: #39A7FF;
+  background-color: #87a827;
 }
 .btn.color_2 {
   border: 1px solid #e9e9e9;
@@ -61,7 +61,7 @@ button {
   font-size: 18px;
   line-height: 32px;
   font-weight: 500;
-  color: #39A7FF;
+  color: #87a827;
 }
 .tit_wrap p {
   font-size: 29px;
@@ -74,7 +74,7 @@ button {
   font-weight: 500;
 }
 .tit_wrap p em {
-  color: #39A7FF;
+  color: #87a827;
 }
 .tit_wrap p span {
   display: inline;
@@ -91,7 +91,7 @@ button {
   position: absolute;
   top: 0;
   right: -7px;
-  color: #39A7FF;
+  color: #87a827;
 }
 .essen.type_l:before {
   right: auto;
@@ -116,7 +116,7 @@ input[type=text]::placeholder, input[type=number]::placeholder {
 }
 input[type=text]:focus, input[type=number]:focus {
   outline: none;
-  border-color: #39A7FF;
+  border-color: #87a827;
   background-color: rgba(224, 244, 255, 0.5176470588);
 }
 
@@ -129,7 +129,7 @@ textarea {
 }
 textarea:focus {
   outline: none;
-  border-color: #39A7FF;
+  border-color: #87a827;
 }
 textarea::-webkit-scrollbar {
   width: 8px;
@@ -183,7 +183,7 @@ textarea::-webkit-scrollbar-track {
 }
 .checkbox input:checked ~ label:before {
   border: 0 none;
-  background: #39A7FF url("../images/ico/checkbox_on.svg");
+  background: #87a827 url("../images/ico/checkbox_on.svg");
   background-size: 100% 100%;
 }
 .checkbox input[disabled] ~ label:before {
@@ -206,11 +206,11 @@ textarea::-webkit-scrollbar-track {
   padding: 15px 40px;
 }
 .attach > label:hover {
-  border-color: #39A7FF;
+  border-color: #87a827;
 }
 .attach > label span {
   font-size: 18px;
-  color: #39A7FF;
+  color: #87a827;
   position: relative;
   padding-left: 15px;
 }

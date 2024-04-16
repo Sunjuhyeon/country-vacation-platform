@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import Map from '../contents/CityMap'
 import AllMap from '../contents/map/AllMap';
 import DetailMap from '../contents/map/DetailMap';
+import Test from '../contents/map/Test';
 
 export default function Contents(props) {
 
@@ -18,6 +19,7 @@ export default function Contents(props) {
           path="/detailMap/:signguNm"
           element={<DetailMap data={props.data} />}
         />
+        <Route path="/test" element={<Test data={props.data} />} />
       </Routes>
     </div>
   );

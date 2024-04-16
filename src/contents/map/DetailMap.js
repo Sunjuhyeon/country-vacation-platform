@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { Map, MapMarker, CustomOverlayMap } from 'react-kakao-maps-sdk';
 import useKakaoLoader from './useKakaoLoader';
 import useBreakpoint from './useBreakpoint';
-import { InfoBox, MoblieInfoBox } from './styled';
+import { InfoBox, MoblieInfoBox, SearchBox } from './styled';
 import ImgMap1 from '../../assets/images/ico/map_cate1.png';
 import ImgMap2 from '../../assets/images/ico/map_cate2.png';
 import ImgMap3 from '../../assets/images/ico/map_cate3.png';
@@ -19,9 +19,10 @@ export default function DetailMap({data}) {
   const state = location.state;
   const dispatch = useDispatch();
 
-  const [filteredData, setFilteredData] = useState([]);
+  // const [filteredData, setFilteredData] = useState([]);
   const isOpenArray = useSelector(state => state.map.isOpenArray); // 커스텀 오버레이 관리
   const isCenter = useSelector(state => state.map.position); //지도 center 관리
+  const [searchKeyword, setSearchKeyword] = useState('');
   const { isMobile, isDesktop } = useBreakpoint(); //breakpoint
   // const [mapCenter, setMapCenter] = useState({
   //   lat: state.cityState.lat,
@@ -56,14 +57,14 @@ export default function DetailMap({data}) {
   };
 
   useEffect(() => {
-    if (state && state.cityName) {
-      const cityName = state.cityName;
-      const filtered = data.filter(item => item.signguNm === cityName);
-      setFilteredData(filtered);
-      dispatch(toggleMarkerIsOpen({ index: 0, isOpen: false }));
+    // if (state && state.cityName) {
+    //   const cityName = state.cityName;
+    //   const filtered = data.filter(item => item.signguNm === cityName);
+    //   setFilteredData(filtered);
+    //   dispatch(toggleMarkerIsOpen({ index: 0, isOpen: false }));
 
-      console.log(filtered);
-    }
+    //   console.log(filtered);
+    // }
     if (state && state.cityState) {
       dispatch(
         setMapCenter({ lat: state.cityState.lat, lng: state.cityState.lng })
@@ -73,10 +74,39 @@ export default function DetailMap({data}) {
 
   console.log(state.cityName);
 
+  const filteredByCity = data.filter(
+    item => item.signguNm === state.cityName
+  );
+  const filteredData = filteredByCity.filter(item => {
+    //검색어를 공백을 기준으로 분리하여 검색 조건을 생성
+    const searchTerms = searchKeyword.toLowerCase().split(' ');
+
+    // 각 검색어에 대해 장소의 이름, 주소, 체험프로그램, 카테고리 등에서 검색 수행
+    return searchTerms.every(term => {
+      if (
+        item.exprnVilageNm.toLowerCase().includes(term) ||
+        item.rdnmadr.toLowerCase().includes(term) ||
+        item.exprnCn.toLowerCase().includes(term)
+      ) {
+        return true;
+      }
+      return false;
+    });
+  });
+
   return (
     <div>
       <div className="map_inner">
         <Button cityName={state.stateName} />
+        <SearchBox>
+          {/* 검색 입력 필드 */}
+          <input
+            type="text"
+            value={searchKeyword}
+            onChange={e => setSearchKeyword(e.target.value)}
+            placeholder="검색어를 입력하세요"
+          />
+        </SearchBox>
         <div>
           <Map // 지도를 표시할 Container
             id="map"
